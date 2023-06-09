@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      .categoria-option {
+        display: flex;
+        align-items: center;
+      }
+  
+      .categoria-color {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <h2>Carga de gastos e ingresos</h2>
+    <p>Welcome to <%= title %></p>
+    <h1>Formulario de Carga</h1>
+
+    <form action="/guardar" method="POST">
+      <label for="date">Fecha:</label>
+      <input type="date" id="date" name="date" required><br><br>
+
+      <label for="name">Consumo:</label>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="ammount">Monto:</label>
+      <input type="number" id="ammount" name="ammount" required><br><br>
+
+      
+      <label for="py_mtd">Tipo de Pago:</label>
+  <select id="py_mtd" name="py_mtd">
+    <option value="efectivo">Efectivo</option>
+    <option value="tarjeta">Tarjeta de Crédito</option>
+    <option value="debito">Debito</option>
+    <option value="otro">Otro</option>
+  </select><br><br>
+
+  <div id="paymentDetails" style="display: none;">
+    <label for="paymentAmount">Monto Total con Intereses:</label>
+    <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0.01" required><br><br>
+
+    <label for="installments">Cantidad de Pagos:</label>
+    <select id="installments" name="installments">
+      <option value="1">1</option>
+      <option value="3">3</option>
+      <option value="6">6</option>
+      <option value="9">9</option>
+      <option value="12">12</option>
+      <option value="24">24</option>
+    </select><br><br>
+
+    <div id="installmentDetails" style="display: none;">
+      <label for="installmentAmount">Valor de cada Cuota:</label>
+      <input type="number" id="installmentAmount" name="installmentAmount" step="0.01" readonly><br><br>
+    </div>
+  </div>
+
+      <label for="category">Categoría:</label>
+      <select id="category" name="category">
+        <option value="comida" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Comida
+        </option>
+        <option value="transporte" data-color="#00FF00" class="categoria-option">
+          <span class="categoria-color" style="background-color: #00FF00;"></span>
+          Transporte
+        </option>
+        <option value="entretenimiento" data-color="#0000FF" class="categoria-option">
+          <span class="categoria-color" style="background-color: #0000FF;"></span>
+          Entretenimiento
+        </option>
+        <option value="servicios" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Servicios
+        </option>
+        <option value="auto" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Auto
+        </option>
+        <option value="deuda" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Deuda
+        </option>
+        <option value="otro" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Otro
+        </option>
+      </select><br><br>
+
+      <label for="texto-libre">Texto Libre:</label>
+      <input type="text" id="texto-libre" name="texto_libre" style="width: 300px; height: 100px;" maxlength="200"><br><br>
+
+      <label for="color">Color:</label>
+      <select id="color" name="color">
+        <option value="#FF0000" style="background-color: #FF0000;">Rojo</option>
+        <option value="#00FF00" style="background-color: #00FF00;">Verde</option>
+        <option value="#0000FF" style="background-color: #0000FF;">Azul</option>
+        <option value="#FFFF00" style="background-color: #FFFF00;">Amarillo</option>
+        <option value="#FF00FF" style="background-color: #FF00FF;">Magenta</option>
+        <option value="#00FFFF" style="background-color: #00FFFF;">Cian</option>
+        <option value="#000000" style="background-color: #000000; color: #FFFFFF;">Negro</option>
+      </select><br><br>
+
+   
+
+     
+
+      
+
+      <input type="submit" value="Guardar" onclick="calcularSuma();">
+    </form>
+    <script src="/public/javascripts/scripts.js"></script>
+
+    <script src="../public/javascripts/scripts.js"></script>
+    <h1>Tabla de Gastos</h1>
+<table>
+  <tr>
+    <th>Fecha</th>
+    <th>Consumo</th>
+    <th>Monto</th>
+    <th>Tipo de Pago</th>
+    <th>Categoría</th>
+    <th>Texto Libre</th>
+  </tr>
+  <% consumos.forEach(function(consumo) { %>
+    <tr>
+      <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+      <td><%= consumo.consumo %></td>
+      <td><%= consumo.monto  %></td>
+      <td><%= consumo.tipo_pago %></td>
+      <td><%= consumo.categoria %></td>
+      <td><%= consumo.texto_libre || '-' %></td>
+    </tr>
+  <% }); %>
+
+
+    </table>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de Consumos</title>
+  <style>
+    /* Estilos CSS para la tabla */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de Consumos</h1>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Consumo</th>
+      <th>Monto</th>
+      <th>Tipo de Pago</th>
+      <th>Categoría</th>
+      <th>Texto Libre</th>
+      <th>Color</th>
+    </tr>
+    <% consumos.forEach(function(consumo) { %>
+      <tr>
+        <td><%= consumo.id %></td>
+        <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+
+        <td><%= consumo.consumo %></td>
+        <td><%= consumo.monto %></td>
+        <td><%= consumo.tipo_pago %></td>
+        <td><%= consumo.categoria %></td>
+        <td><%= consumo.texto_libre || '-' %></td>
+        <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
+    </tr>
+    <% }); %>
+  </table>
+</body>
+</html>
