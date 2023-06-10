@@ -1,25 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <style>
-      .categoria-option {
-        display: flex;
-        align-items: center;
-      }
-  
-      .categoria-color {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <h2>Carga de gastos e ingresos</h2>
-    <p>Welcome to <%= title %></p>
+<%- include('./partials/head')%>
+
+<body>
+
+<%- include('./partials/navbar') %>      
+
     <h1>Formulario de Carga</h1>
 
     <form  id="formulario" action="/guardar" method="POST">
