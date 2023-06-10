@@ -43,7 +43,7 @@
 
   <div id="paymentDetails" style="display: none;">
     <label for="paymentAmount">Monto Total con Intereses:</label>
-    <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0.01" required><br><br>
+    <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0.01"><br><br>
 
     <label for="installments">Cantidad de Pagos:</label>
     <select id="installments" name="installments">
@@ -136,6 +136,10 @@
       <td><%= consumo.tipo_pago %></td>
       <td><%= consumo.categoria %></td>
       <td><%= consumo.texto_libre || '-' %></td>
+      <td><%= consumo.monto_total %></td>
+      <td><%= consumo.cantidad_pagos %></td>
+      <td><%= consumo.valor_cuota %></td>
+
     </tr>
   <% }); %>
 
