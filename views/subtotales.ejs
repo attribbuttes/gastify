@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de Categorías</title>
+</head>
+<body>
+  <h1>Lista de Categorías</h1>
+  <table>
+    <tr>
+      <th>Categoría</th>
+      <th>Total Gastos</th>
+    </tr>
+    <% consumosAgrupados.forEach(function(consumo) { %>
+      <tr>
+        <td><%= consumo.categoria %></td>
+        <td><%= totalesPorCategoria[consumo.categoria] || 0 %></td>
+      </tr>
+    <% }); %>
+  </table>
+
+  <h1>Lista de Categorías</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Categoría</th>
+      <th>Total Gastos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
+      <tr>
+        <td><%= categoria %></td>
+        <td><%= total.toFixed(2) %></td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+</body>
+</html>

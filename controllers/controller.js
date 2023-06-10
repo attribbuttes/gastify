@@ -90,6 +90,7 @@ const controller = {
           const consumosAgrupados = await Consumo.findAll({
             order: ['categoria'],
           });
+          
     
           res.render('categorias', { consumosAgrupados });
         } catch (error) {
@@ -97,21 +98,31 @@ const controller = {
           res.status(500).send('Error al obtener los consumos agrupados');
         }
       },
-      /*categoria: async (req, res) => {
+      
+      subtotales: async function(req, res, next) {
         try {
           const consumosAgrupados = await Consumo.findAll({
-            attributes: ['categoria', [Sequelize.fn('SUM', Sequelize.col('monto_total')), 'total']],
-            group: ['categoria'],
+            order: ['categoria'],
           });
-    
-          const consumosDetallados = await Consumo.findAll(); // Obtener todos los consumos sin agrupar
-    
-          res.render('categoria', { consumosDetallados });
+      
+          const totalesPorCategoria = {};
+          consumosAgrupados.forEach(consumo => {
+            const categoria = consumo.categoria;
+            const monto = parseFloat(consumo.monto);
+      
+            if (totalesPorCategoria[categoria]) {
+              totalesPorCategoria[categoria] += monto;
+            } else {
+              totalesPorCategoria[categoria] = monto;
+            }
+          });
+      
+          res.render('subtotales', { consumosAgrupados, totalesPorCategoria });
         } catch (error) {
           console.error(error);
-          res.status(500).send('Error al obtener los consumos');
+          res.status(500).send('Error al obtener los consumos agrupados');
         }
-      },*/
+      },
     };
       
 
