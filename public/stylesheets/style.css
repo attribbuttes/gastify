@@ -1,8 +1,17 @@
+/* Estilos generales */
 body {
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos de la barra de navegación */
 .navbar {
   background-color: #333;
   color: #fff;
@@ -34,6 +43,42 @@ body {
   text-decoration: underline;
 }
 
+/* Estilos de las listas */
+.list-container {
+  margin-top: 20px;
+}
+
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list-table th,
+.list-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.list-table th {
+  background-color: #f2f2f2;
+}
+
+.list-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.list-table td:last-child {
+  text-align: center;
+}
+
+.list-table .color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+/* Estilos para las opciones de categoría */
 .categoria-option {
   display: flex;
   align-items: center;
