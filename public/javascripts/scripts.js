@@ -1,10 +1,4 @@
-function calcularSuma() {
-    var consumo = parseFloat(document.getElementById("name").value);
-    var monto = parseFloat(document.getElementById("ammount").value);
-    var suma = consumo + monto;
-    document.getElementById("suma").value = suma.toFixed(2);
-  }
-  
+
   function guardarDatos() {
     document.getElementById('formulario').submit(); // Enviar el formulario
   }

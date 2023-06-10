@@ -26,6 +26,18 @@ Consumo.init(
       type: DataTypes.STRING,
       allowNull: false
     },
+    monto_total: {
+        type: DataTypes.FLOAT,
+        allowNull: true // Puedes ajustar esto según tus requisitos
+      },
+      cantidad_pagos: {
+        type: DataTypes.INTEGER,
+        allowNull: true // Puedes ajustar esto según tus requisitos
+      },
+      valor_cuota: {
+        type: DataTypes.FLOAT,
+        allowNull: true // Puedes ajustar esto según tus requisitos
+      },
     categoria: {
       type: DataTypes.STRING,
       allowNull: false

@@ -28,7 +28,17 @@ router.get('/consumos', async (req, res) => {
 
 router.post('/guardar', async (req, res) => {
   try {
-    const { date, name, ammount, py_mtd, paymentAmount, installments, installmentAmount } = req.body;
+    const { date, name, ammount, py_mtd, paymentAmount, installments, installmentAmount, category, texto_libre } = req.body;
+
+    let monto_total = 0;
+    let cantidad_pagos = 0;
+    let valor_cuota = 0;
+
+    if (py_mtd === 'tarjeta') {
+      monto_total = paymentAmount;
+      cantidad_pagos = installments;
+      valor_cuota = installmentAmount;
+    }
 
     // Guardar los datos en la base de datos utilizando el modelo Consumo
     await Consumo.create({
@@ -37,10 +47,10 @@ router.post('/guardar', async (req, res) => {
       monto: ammount,
       tipo_pago: py_mtd,
       monto_total: paymentAmount,
-      cantidad_pagos: installments,
-      valor_cuota: installmentAmount,
+      cantidad_pagos:installments,
+      valor_cuota:installmentAmount,
       categoria: req.body.category,
-      texto_libre: req.body.texto_libre,
+      texto_libre:req.body.texto_libre,
     });
 
     const consumos = await Consumo.findAll();

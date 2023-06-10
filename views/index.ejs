@@ -22,7 +22,7 @@
     <p>Welcome to <%= title %></p>
     <h1>Formulario de Carga</h1>
 
-    <form action="/guardar" method="POST">
+    <form  id="formulario" action="/guardar" method="POST">
       <label for="date">Fecha:</label>
       <input type="date" id="date" name="date" required><br><br>
 
@@ -113,11 +113,11 @@
 
       
 
-      <input type="submit" value="Guardar" onclick="calcularSuma();">
+      <input type="submit" value="Guardar">
     </form>
-    <script src="/public/javascripts/scripts.js"></script>
+    
 
-    <script src="../public/javascripts/scripts.js"></script>
+    <script src="../javascripts/scripts.js"></script>
     <h1>Tabla de Gastos</h1>
 <table>
   <tr>
