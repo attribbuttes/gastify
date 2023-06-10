@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Lista de Categorías</title>
-</head>
-<body>
-  <h1>Lista de Categorías</h1>
-  <table>
-    <tr>
-      <th>Categoría</th>
-      <th>Total Gastos</th>
-    </tr>
-    <% consumosAgrupados.forEach(function(consumo) { %>
-      <tr>
-        <td><%= consumo.categoria %></td>
-        <td><%= totalesPorCategoria[consumo.categoria] || 0 %></td>
-      </tr>
-    <% }); %>
-  </table>
-
-  <h1>Lista de Categorías</h1>
+<h1>Lista de Categorías</h1>
 <table>
   <thead>
     <tr>
@@ -35,5 +15,3 @@
     <% }); %>
   </tbody>
 </table>
-</body>
-</html>
