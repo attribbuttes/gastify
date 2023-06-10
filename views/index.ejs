@@ -127,6 +127,11 @@
     <th>Tipo de Pago</th>
     <th>Categoría</th>
     <th>Texto Libre</th>
+    <th>Importe con intereses</th>
+    <th>Cantidad de cuotas</th>
+    <th>Valor de cada cuota</th>
+    <th>Color</th>
+
   </tr>
   <% consumos.forEach(function(consumo) { %>
     <tr>
@@ -139,6 +144,8 @@
       <td><%= consumo.monto_total %></td>
       <td><%= consumo.cantidad_pagos %></td>
       <td><%= consumo.valor_cuota %></td>
+      <td><%= consumo.color %></td>
+
 
     </tr>
   <% }); %>
