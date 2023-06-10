@@ -27,7 +27,7 @@ Consumo.init(
       allowNull: false
     },
     monto_total: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true // Puedes ajustar esto según tus requisitos
       },
       cantidad_pagos: {

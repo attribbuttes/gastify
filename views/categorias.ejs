@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Lista de Consumos</title>
-  <style>
-    /* Estilos CSS para la tabla */
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
+<h2>Consumos agrupados por categoría:</h2>
 
-    th, td {
-      text-align: left;
-      padding: 8px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
-</head>
-<body>
-  <h1>Lista de Consumos</h1>
   <table>
     <tr>
       <th>ID</th>
@@ -32,7 +11,7 @@
       <th>Texto Libre</th>
       <th>Color</th>
     </tr>
-    <% consumos.forEach(function(consumo) { %>
+    <% consumosAgrupados.forEach(function(consumo) { %>
       <tr>
         <td><%= consumo.id %></td>
         <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
@@ -47,6 +26,3 @@
     <% }); %>
   </table>
   
-
-</body>
-</html>

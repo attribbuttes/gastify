@@ -29,3 +29,11 @@ document.getElementById('installments').addEventListener('change', function() {
     document.getElementById('installmentDetails').style.display = 'none';
   }
 });
+
+var fechaActual = new Date();
+
+    // Formatear la fecha en formato YYYY-MM-DD (que es el formato requerido por el campo de fecha)
+    var fechaFormateada = fechaActual.toISOString().split('T')[0];
+
+    // Establecer la fecha actual como valor predeterminado en el campo de fecha
+    document.getElementById("date").value = fechaFormateada;
