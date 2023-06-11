@@ -43,11 +43,7 @@ body {
   text-decoration: underline;
 }
 
-/* Estilos de las listas */
-.list-container {
-  margin-top: 20px;
-}
-
+/* Estilos para la tabla de consumos */
 .list-table {
   width: 100%;
   border-collapse: collapse;
@@ -57,14 +53,14 @@ body {
 .list-table td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
 }
 
 .list-table th {
   background-color: #f2f2f2;
 }
 
-.list-table tr:hover {
+.list-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
@@ -78,14 +74,30 @@ body {
   border-radius: 50%;
 }
 
-/* Estilos para las opciones de categoría */
-.categoria-option {
+/* Estilos para los títulos de las columnas */
+.list-table th {
+  white-space: nowrap;
+}
+
+.list-table th div {
   display: flex;
   align-items: center;
 }
 
-.categoria-color {
-  width: 20px;
-  height: 20px;
+.list-table th .title-cell {
+  margin-right: 10px;
+}
+
+/* Estilos para los datos de consumo */
+.list-table td {
+  white-space: nowrap;
+}
+
+.list-table td div {
+  display: flex;
+  align-items: center;
+}
+
+.list-table td .color-box {
   margin-right: 10px;
 }
