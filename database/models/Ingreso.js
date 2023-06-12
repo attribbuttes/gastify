@@ -9,16 +9,29 @@ const Ingreso = sequelize.define('Ingreso', {
   },
   importe: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    allowNull: true
   },
-  origen: {
+  fuente: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   fecha: {
     type: DataTypes.DATEONLY,
-    allowNull: false
-  }
+    allowNull: true
+  },
+  categoria: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  
+  texto: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  horas:    {
+  type: DataTypes.INTEGER,
+  allowNull: true // o false según tus requisitos
+},
 }, {
   tableName: 'ingresos',
   timestamps: false // Opcional: deshabilita la creación de las columnas "createdAt" y "updatedAt"

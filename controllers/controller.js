@@ -13,22 +13,7 @@ const controller = {
           res.status(500).send('Error al obtener los consumos');
         }
       },
-      /*consumos: async (req, res) => {
-        try {
-          const consumosAgrupados = await Consumo.findAll({
-            attributes: ['categoria', [Sequelize.fn('SUM', Sequelize.col('monto_total')), 'total']],
-            group: ['categoria'],
-          });
-          
-          const consumos = await Consumo.findAll();
-          const consumosDetallados = await Consumo.findAll(); // Obtener todos los consumos sin agrupar
-    
-          res.render('consumos', { consumos, consumosAgrupados, consumosDetallados });
-        } catch (error) {
-          console.error(error);
-          res.status(500).send('Error al obtener los consumos');
-        }
-      },*/
+      
       consumos:  async (req, res) => {
         try {
           const consumos = await Consumo.findAll();
@@ -123,8 +108,39 @@ const controller = {
           res.status(500).send('Error al obtener los consumos agrupados');
         }
       },
-    };
+      registro:  async (req, res) => {
+        try {
+          const { date, name, ammount, py_mtd, horas, color, category, texto_libre } = req.body;
       
+          let monto_total = 0;
+          
+      
+          // Guardar los datos en la base de datos utilizando el modelo Consumo
+          await Ingreso.create({
+            fecha: date,
+            fuente: name,
+            importe: ammount,
+            tipo_pago: py_mtd,
+            horas: horas,
+            categoria: category,
+            color:color,
+            texto: texto_libre,
+            
+      
+          });
+          
+      
+          const consumos = await Consumo.findAll();
+          const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
+      
+          res.render('index', { title: 'Express', consumos, montos }); // Pasar los montos a la vista
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al guardar los datos');
+        }
+      },
+    };
+    
 
 
 
