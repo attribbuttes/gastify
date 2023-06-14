@@ -37,3 +37,8 @@ var fechaActual = new Date();
 
     // Establecer la fecha actual como valor predeterminado en el campo de fecha
     document.getElementById("date").value = fechaFormateada;
+
+    var today = new Date().toISOString().split('T')[0];
+  document.getElementById('date-ingresos').value = today;
+
+  /*el id en el formulario de ingresos conecta con 'date-ingresos'

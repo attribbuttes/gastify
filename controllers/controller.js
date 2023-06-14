@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const { Consumo } = require('../database/models');
+const { Ingreso } = require('../database/models');
+
 
 const controller = {
    index: async function(req, res, next) {
@@ -130,13 +132,23 @@ const controller = {
           });
           
       
-          const consumos = await Consumo.findAll();
-          const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
+          const ingresos = await Ingreso.findAll();
+          //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
       
-          res.render('index', { title: 'Express', consumos, montos }); // Pasar los montos a la vista
+          res.render('ingresos', { title: 'Express', ingresos/* montos*/ }); // Pasar los montos a la vista
         } catch (error) {
           console.error(error);
-          res.status(500).send('Error al guardar los datos');
+          res.status(500).send('Error al guardar los datos: ${error.message}');
+        }
+      },
+      ingresos:  async (req, res) => {
+        try {
+          const ingresos = await Ingreso.findAll();
+          //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
+          res.render('ingresos', { ingresos }); // Pasar los montos a la vista
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al obtener los consumos');
         }
       },
     };
