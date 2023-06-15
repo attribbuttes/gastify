@@ -5,10 +5,10 @@
 <%- include('./partials/navbar') %>    
 
 <div class="list-container">
-  <table class="list-table">
+  
   
   <h1>Lista de Consumos</h1>
-  <table>
+  <table class="list-tableI">
     <tr>
       <th>ID</th>
       <th>Fecha</th>
@@ -30,7 +30,16 @@
         <td><%= consumo.categoria %></td>
         <td><%= consumo.texto_libre || '-' %></td>
         <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
-    </tr>
+        <td>
+          <!-- Agregar botón de editar con enlace al controlador "editar" -->
+          <a href="/consumos/editar/<%= consumo.id %>">Editar</a>
+          <!-- Agregar botón de borrar con enlace al controlador "borrar" -->
+          <form action="/consumos/borrar/<%= consumo.id %>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Borrar</button>
+          </form>
+        </td>
+      </tr>
     <% }); %>
   </table>
 </div>

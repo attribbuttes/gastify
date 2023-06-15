@@ -1,4 +1,3 @@
-/* Estilos generales */
 body {
   margin: 0;
   padding: 0;
@@ -43,61 +42,240 @@ body {
   text-decoration: underline;
 }
 
-/* Estilos para la tabla de consumos */
-.list-table {
-  width: 100%;
-  border-collapse: collapse;
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.list-table th,
-.list-table td {
-  padding: 8px;
-  text-align: left;
+.form-wrapper {
+  width: 48%;
+  margin-bottom: 20px;
+}
+
+.list-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.list-container form {
+  font-family: Arial, sans-serif;
+  padding: 20px;
   border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.list-table th {
+.list-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.list-container input[type="date"],
+.list-container input[type="text"],
+.list-container input[type="number"],
+.list-container select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.list-container input[type="submit"] {
+  width: auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-container input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.list-container #paymentDetails,
+.list-container #installmentDetails {
+  display: none;
+}
+
+.list-container .categoria-option {
+  display: flex;
+  align-items: center;
+}
+
+.list-container .categoria-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.list-container select#color {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.list-container select#color option {
+  padding: 5px;
+}
+
+.list-container select#color option:hover {
   background-color: #f2f2f2;
 }
 
-.list-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.list-container select#color::-ms-expand {
+  display: none;
 }
 
-.list-table td:last-child {
+@media (max-width: 768px) {
+  .form-wrapper {
+    width: 100%;
+  }
+}
+
+
+/*lista ingresos*/
+
+.list-tableI {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.list-tableI th, .list-tableI td {
+  padding: 10px;
   text-align: center;
 }
 
-.list-table .color-box {
-  width: 20px;
-  height: 20px;
+.list-tableI th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.list-tableI tr:nth-child(even) {
+  background-color: #eaf2f8;
+}
+
+.list-tableI tr:hover {
+  background-color: #cfdcf6;
+}
+
+.list-tableI td div {
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
+  display: inline-block;
 }
 
-/* Estilos para los títulos de las columnas */
-.list-table th {
-  white-space: nowrap;
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.list-table th div {
+/*index*/
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-wrapper {
+  width: 48%;
+  margin-bottom: 20px;
+}
+
+.list-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.list-container form {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.list-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.list-container input[type="date"],
+.list-container input[type="text"],
+.list-container input[type="number"],
+.list-container select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.list-container input[type="submit"] {
+  width: auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-container input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.list-container #paymentDetails,
+.list-container #installmentDetails {
+  display: none;
+}
+
+.list-container .categoria-option {
   display: flex;
   align-items: center;
 }
 
-.list-table th .title-cell {
-  margin-right: 10px;
+.list-container .categoria-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
 }
 
-/* Estilos para los datos de consumo */
-.list-table td {
-  white-space: nowrap;
+.list-container select#color {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
-.list-table td div {
-  display: flex;
-  align-items: center;
+.list-container select#color option {
+  padding: 5px;
 }
 
-.list-table td .color-box {
-  margin-right: 10px;
+.list-container select#color option:hover {
+  background-color: #f2f2f2;
+}
+
+.list-container select#color::-ms-expand {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .form-wrapper {
+    width: 100%;
+  }
 }

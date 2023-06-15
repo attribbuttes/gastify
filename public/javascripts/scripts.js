@@ -41,4 +41,4 @@ var fechaActual = new Date();
     var today = new Date().toISOString().split('T')[0];
   document.getElementById('date-ingresos').value = today;
 
-  /*el id en el formulario de ingresos conecta con 'date-ingresos'
+  /*el id en el formulario de ingresos conecta con 'date-ingresos'*/

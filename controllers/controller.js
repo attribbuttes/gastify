@@ -151,7 +151,51 @@ const controller = {
           res.status(500).send('Error al obtener los consumos');
         }
       },
+
+      editar: async function (req, res, next) {
+        try {
+          const { id, fecha, consumo, monto, tipo_pago, categoria, texto_libre, color } = req.body;
+    
+          // Buscar el consumo por su ID
+          const consumoEditado = await Consumo.findByPk(id);
+    
+          // Actualizar los campos del consumo
+          if (consumoEditado) {
+            consumoEditado.fecha = fecha;
+            consumoEditado.consumo = consumo;
+            consumoEditado.monto = monto;
+            consumoEditado.tipo_pago = tipo_pago;
+            consumoEditado.categoria = categoria;
+            consumoEditado.texto_libre = texto_libre;
+            consumoEditado.color = color;
+    
+            await consumoEditado.save(); // Guardar los cambios en la base de datos
+          }
+    
+          // Redireccionar a la página principal
+          res.redirect('/');
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al editar el consumo');
+        }
+      },
+    
+      borrar: async function (req, res, next) {
+        try {
+          const { id } = req.params;
+    
+          // Buscar el consumo por su ID y eliminarlo
+          await Consumo.destroy({ where: { id } });
+    
+          // Redireccionar a la página principal
+          res.redirect('/');
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al eliminar el consumo');
+        }
+      },
     };
+    
     
 
 
