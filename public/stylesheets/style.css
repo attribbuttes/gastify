@@ -55,7 +55,9 @@ body {
 
 .list-container h1 {
   text-align: center;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
+  margin-left: auto;
+  margin-right: auto
 }
 
 .list-container form {
@@ -144,10 +146,15 @@ body {
 
 /*lista ingresos*/
 
+.table-wrapper {
+  overflow-x: auto;
+}
+
 .list-tableI {
   width: 100%;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
+  white-space: nowrap; 
 }
 
 .list-tableI th, .list-tableI td {
@@ -274,8 +281,40 @@ h1 {
   display: none;
 }
 
+.table-wrapper {
+  overflow-x: auto;
+}
+
 @media (max-width: 768px) {
   .form-wrapper {
     width: 100%;
   }
 }
+
+@media (max-width: 768px) {
+  .table-wrapper {
+    overflow-x: scroll; /* Desplazamiento horizontal en pantallas pequeñas */
+    -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en dispositivos iOS */
+    margin-bottom: 20px;
+  }
+
+  .list-tableI {
+    min-width: 600px; /* Ancho mínimo de la tabla para evitar que se colapse demasiado */
+  }
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+  /* Navbar ocupa el ancho completo del viewport */
+  .navbar {
+    
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Ajustes adicionales para los íconos en dispositivos móviles */
+  .navbar-list li {
+    margin: 0 10px;
+  }
+}
+

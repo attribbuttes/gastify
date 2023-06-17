@@ -8,6 +8,8 @@
   
   
   <h1>Lista de Ingresos</h1>
+
+  <div class="table-wrapper">
   <table class="list-tableI">
     <tr>
       <th>ID</th>
@@ -36,11 +38,13 @@
         
         <td><%= ingreso.texto || '-' %></td>
         <td><div style="width: 20px; height: 20px; background-color: <%= ingreso.color %>"></div></td>
-        <td><%= ingreso.tipo_pago %></td>
+        <!--<td><%= ingreso.tipo_pago %></td>-->
         <td><%= ingreso.categoria %></td>
     </tr>
     <% }); %>
   </table>
+</div>
+</div>
 </div>
 
 </body>

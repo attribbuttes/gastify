@@ -42,3 +42,29 @@ var fechaActual = new Date();
   document.getElementById('date-ingresos').value = today;
 
   /*el id en el formulario de ingresos conecta con 'date-ingresos'*/
+  document.getElementById('ordenarPor').addEventListener('change', function() {
+    var tabla = document.getElementById('tabla');
+    var ordenarPor = this.value;
+    ordenarTabla(tabla, ordenarPor);
+  });
+  //orden segun lo que sea en tabla index
+  document.getElementById('ordenarPor').addEventListener('change', function() {
+    ordenarTabla();
+  });
+
+  function ordenarTabla() {
+    var tabla = document.querySelector('.gastos');
+    var criterio = document.getElementById('ordenarPor').value;
+    var filas = Array.from(tabla.querySelectorAll('tr'));
+
+    filas.sort(function(a, b) {
+      var contenidoA = a.querySelector('.' + criterio).textContent;
+      var contenidoB = b.querySelector('.' + criterio).textContent;
+      return contenidoA.localeCompare(contenidoB);
+    });
+
+    for (var i = 0; i < filas.length; i++) {
+      tabla.appendChild(filas[i]);
+    }
+  }
+  

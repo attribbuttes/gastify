@@ -180,19 +180,19 @@ const controller = {
         }
       },
     
-      borrar: async function (req, res, next) {
-        try {
-          const { id } = req.params;
-    
-          // Buscar el consumo por su ID y eliminarlo
-          await Consumo.destroy({ where: { id } });
-    
-          // Redireccionar a la página principal
-          res.redirect('/');
-        } catch (error) {
-          console.error(error);
-          res.status(500).send('Error al eliminar el consumo');
-        }
+      borrar: (req, res) => {
+        Consumo.destroy({
+          where: {
+            id: req.params.id,
+          },
+        })
+          .then((result) => {
+            res.redirect('/');
+          })
+          .catch((error) => {
+            console.log(error);
+            res.redirect('/');
+          });
       },
     };
     

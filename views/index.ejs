@@ -153,8 +153,27 @@
   </form>
 </div>
 </div>
+
+
+
+<div class="list-containerI">
 <h1>Tabla de Gastos</h1>
-<table class="gastos list-tableI">
+<div class="table-wrapper">
+  <select id="ordenarPor">
+    <option value="fecha">Fecha</option>
+    <option value="consumo">Consumo</option>
+    <option value="monto">Monto</option>
+    <option value="tipo-pago">Tipo de Pago</option>
+    <option value="categoria">Categoría</option>
+    <option value="texto-libre">Texto Libre</option>
+    <option value="color">Color</option>
+    <option value="conintereses">Importe con intereses</option>
+    <option value="cantidad-cuotas">Cantidad de cuotas</option>
+    <option value="valor-cuota">Valor de cada cuota</option>
+  </select>
+  <table class="gastos list-tableI">
+    <thead>
+
   <tr>
     <th>Fecha</th>
     <th>Consumo</th>
@@ -162,28 +181,58 @@
     <th>Tipo de Pago</th>
     <th>Categoría</th>
     <th>Texto Libre</th>
+    <th>Color</th>
     <th>Importe con intereses</th>
     <th>Cantidad de cuotas</th>
     <th>Valor de cada cuota</th>
-    <th>Color</th>
+    
   </tr>
+</thead>
+<tbody>
+
   <% consumos.forEach(function(consumo) { %>
     <tr>
-      <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
-      <td><%= consumo.consumo %></td>
-      <td><%= consumo.monto  %></td>
-      <td><%= consumo.tipo_pago %></td>
-      <td><%= consumo.categoria %></td>
+      <td class="fecha"><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+      <td class="consumo"><%= consumo.consumo %></td>
+      <td class="monto"><%= consumo.monto  %></td>
+      <td class="tipo-pago"><%= consumo.tipo_pago %></td>
+      <td class="categoria"><%= consumo.categoria %></td>
       <td><%= consumo.texto_libre || '-' %></td>
-      <td><%= consumo.monto_total %></td>
+
+      <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
+      <td class="conintereses"><%= consumo.monto_total %></td>
       <td><%= consumo.cantidad_pagos %></td>
       <td><%= consumo.valor_cuota %></td>
-      <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
     </tr>
   <% }); %>
 </table>
+</tbody>
 
+</div>
+</div>
 <script src="../javascripts/scripts.js"></script>
+<script>
+  document.getElementById('ordenarPor').addEventListener('change', function() {
+    ordenarTabla();
+  });
+
+  function ordenarTabla() {
+    var tabla = document.querySelector('.gastos');
+    var criterio = document.getElementById('ordenarPor').value;
+    var filas = Array.from(tabla.querySelectorAll('tbody tr'));
+
+    filas.sort(function(a, b) {
+      var contenidoA = a.querySelector('.' + criterio).textContent;
+      var contenidoB = b.querySelector('.' + criterio).textContent;
+      return contenidoA.localeCompare(contenidoB);
+    });
+
+    var tbody = tabla.querySelector('tbody');
+    filas.forEach(function(fila) {
+      tbody.appendChild(fila);
+    });
+  }
+</script>
 
 </body>
 </html>
