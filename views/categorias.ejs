@@ -2,17 +2,18 @@
 
 <body>
 
-<%- include('./partials/navbar') %>    
+<%- include('./partials/navbar') %>
+
 <div class="list-containerI">
-  
-<h1>Consumos agrupados por categoría:</h1>
-<div class="table-wrapper">
-<table class="list-tableI">
-    <tr>
-      <th>ID</th>
+      <h1>Consumos agrupados por categoría:</h1>
+
+      <div class="table-wrapper">
+        <table class="list-tableI">
+        <tr>
+      <!--<th>ID</th>-->
       <th>Fecha</th>
       <th>Consumo</th>
-      <th>Monto</th>
+      <th>Importe</th>
       <th>Tipo de Pago</th>
       <th>Categoría</th>
       <th>Texto Libre</th>
@@ -20,11 +21,11 @@
     </tr>
     <% consumosAgrupados.forEach(function(consumo) { %>
       <tr>
-        <td><%= consumo.id %></td>
+        <!--<td><%= consumo.id %></td>-->
         <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
 
         <td><%= consumo.consumo %></td>
-        <td><%= consumo.monto %></td>
+        <td><%= consumo.importe %></td>
         <td><%= consumo.tipo_pago %></td>
         <td><%= consumo.categoria %></td>
         <td><%= consumo.texto_libre || '-' %></td>

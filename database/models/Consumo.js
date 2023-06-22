@@ -18,8 +18,8 @@ Consumo.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    monto: {
-      type: DataTypes.FLOAT,
+    importe: {
+      type: DataTypes.DECIMAL,
       allowNull: false
     },
     tipo_pago: {

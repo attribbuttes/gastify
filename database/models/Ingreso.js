@@ -11,7 +11,7 @@ const Ingreso = sequelize.define('Ingreso', {
     type: DataTypes.FLOAT,
     allowNull: true
   },
-  fuente: {
+  cliente: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -22,6 +22,9 @@ const Ingreso = sequelize.define('Ingreso', {
   categoria: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  color: {
+    type: DataTypes.STRING(6) // Especifica una longitud máxima de 6 caracteres para el código de color hexadecimal
   },
   
   texto: {

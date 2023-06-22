@@ -41,30 +41,65 @@ var fechaActual = new Date();
     var today = new Date().toISOString().split('T')[0];
   document.getElementById('date-ingresos').value = today;
 
-  /*el id en el formulario de ingresos conecta con 'date-ingresos'*/
-  document.getElementById('ordenarPor').addEventListener('change', function() {
-    var tabla = document.getElementById('tabla');
-    var ordenarPor = this.value;
-    ordenarTabla(tabla, ordenarPor);
-  });
-  //orden segun lo que sea en tabla index
+
+  //ordenar por consumos
   document.getElementById('ordenarPor').addEventListener('change', function() {
     ordenarTabla();
   });
-
+  
   function ordenarTabla() {
     var tabla = document.querySelector('.gastos');
     var criterio = document.getElementById('ordenarPor').value;
+    var filas = Array.from(tabla.querySelectorAll('tbody tr'));
+  
+    filas.sort(function(a, b) {
+      var contenidoA = obtenerContenido(a, criterio);
+      var contenidoB = obtenerContenido(b, criterio);
+  
+      if (criterio === 'importe') {
+        return parseFloat(contenidoB.contenido) - parseFloat(contenidoA.contenido);
+      } else if (criterio === 'color') {
+        // Agrupar por color y ordenar por cantidad de cada color
+        var contadorA = contarElementos(filas, criterio, contenidoA.contenido);
+        var contadorB = contarElementos(filas, criterio, contenidoB.contenido);
+        return contadorB - contadorA;
+      } else {
+        return contenidoA.contenido.localeCompare(contenidoB.contenido);
+      }
+    });
+  
+    var tbody = tabla.querySelector('tbody');
+    filas.forEach(function(fila) {
+      tbody.appendChild(fila);
+    });
+  }
+  
+  function obtenerContenido(fila, criterio) {
+    var contenido = fila.querySelector('.' + criterio).textContent;
+    return {
+      contenido: contenido,
+      tipo: isNaN(parseFloat(contenido)) ? 'texto' : 'numero'
+    };
+  }
+  
+  //orden tabla ingreso
+  document.getElementById('ordenarPorIngreso').addEventListener('change', function() {
+    ordenarTablaIngreso();
+  });
+  
+  function ordenarTablaIngreso() {
+    var tabla = document.querySelector('.list-tableI');
+    var criterio = document.getElementById('ordenarPorIngreso').value;
     var filas = Array.from(tabla.querySelectorAll('tr'));
-
+  
     filas.sort(function(a, b) {
       var contenidoA = a.querySelector('.' + criterio).textContent;
       var contenidoB = b.querySelector('.' + criterio).textContent;
       return contenidoA.localeCompare(contenidoB);
     });
-
-    for (var i = 0; i < filas.length; i++) {
-      tabla.appendChild(filas[i]);
-    }
-  }
   
+    var tbody = tabla.querySelector('tbody');
+    filas.forEach(function(fila) {
+      tbody.appendChild(fila);
+    });
+  }

@@ -5,14 +5,18 @@
 <%- include('./partials/navbar') %>    
 
 <div class="list-containerI">
-  
-  
-  <h1>Lista de Ingresos</h1>
-
+    <h1>Lista de Ingresos</h1>
   <div class="table-wrapper">
+    <select id="ordenarPorIngreso">
+    <option value="fecha">Fecha</option>
+    <option value="cliente">Cliente</option>
+    <option value="importe">Importe</option>
+    <option value="tipo-pago">Tipo de Pago</option>
+    <option value="categoria">Categoría</option>
+  </select>
   <table class="list-tableI">
     <tr>
-      <th>ID</th>
+      
       <th>Fecha</th>
       <th>Cliente</th>
       <th>Cobrado</th>
@@ -27,10 +31,10 @@
     </tr>
     <% ingresos.forEach(function(ingreso) { %>
       <tr>
-        <td><%= ingreso.id %></td>
+      
         <td><%= ingreso.fecha ? new Date(ingreso.fecha).toISOString().slice(0, 10) : '-' %></td>
 
-        <td><%= ingreso.fuente %></td>
+        <td><%= ingreso.cliente %></td>
         <td><%= ingreso.importe %></td>
         <td><%= ingreso.horas %></td>
         <td><%= (ingreso.importe / ingreso.horas).toFixed(2) %></td>
@@ -46,6 +50,8 @@
 </div>
 </div>
 </div>
+<script src="../javascripts/scripts.js">
+</script>
 
 </body>
 </html>

@@ -49,7 +49,7 @@ const controller = {
           await Consumo.create({
             fecha: date,
             consumo: name,
-            monto: ammount,
+            importe: ammount,
             tipo_pago: py_mtd,
             monto_total: monto_total,
             cantidad_pagos: cantidad_pagos,
@@ -95,12 +95,12 @@ const controller = {
           const totalesPorCategoria = {};
           consumosAgrupados.forEach(consumo => {
             const categoria = consumo.categoria;
-            const monto = parseFloat(consumo.monto);
+            const importe = parseFloat(consumo.importe);
       
             if (totalesPorCategoria[categoria]) {
-              totalesPorCategoria[categoria] += monto;
+              totalesPorCategoria[categoria] += importe;
             } else {
-              totalesPorCategoria[categoria] = monto;
+              totalesPorCategoria[categoria] = importe;
             }
           });
       
@@ -110,6 +110,19 @@ const controller = {
           res.status(500).send('Error al obtener los consumos agrupados');
         }
       },
+      
+      //ingresos
+      ingresos:  async (req, res) => {
+        try {
+          const ingresos = await Ingreso.findAll();
+          //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
+          res.render('ingresos', { ingresos }); // Pasar los montos a la vista
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al obtener los consumos');
+        }
+      },
+      //ingresos
       registro:  async (req, res) => {
         try {
           const { date, name, ammount, py_mtd, horas, color, category, texto_libre } = req.body;
@@ -120,7 +133,7 @@ const controller = {
           // Guardar los datos en la base de datos utilizando el modelo Consumo
           await Ingreso.create({
             fecha: date,
-            fuente: name,
+            cliente: name,
             importe: ammount,
             tipo_pago: py_mtd,
             horas: horas,
@@ -141,20 +154,10 @@ const controller = {
           res.status(500).send('Error al guardar los datos: ${error.message}');
         }
       },
-      ingresos:  async (req, res) => {
-        try {
-          const ingresos = await Ingreso.findAll();
-          //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
-          res.render('ingresos', { ingresos }); // Pasar los montos a la vista
-        } catch (error) {
-          console.error(error);
-          res.status(500).send('Error al obtener los consumos');
-        }
-      },
 
       editar: async function (req, res, next) {
         try {
-          const { id, fecha, consumo, monto, tipo_pago, categoria, texto_libre, color } = req.body;
+          const { id, fecha, consumo, importe, tipo_pago, categoria, texto_libre, color } = req.body;
     
           // Buscar el consumo por su ID
           const consumoEditado = await Consumo.findByPk(id);
@@ -163,7 +166,7 @@ const controller = {
           if (consumoEditado) {
             consumoEditado.fecha = fecha;
             consumoEditado.consumo = consumo;
-            consumoEditado.monto = monto;
+            consumoEditado.importe = importe;
             consumoEditado.tipo_pago = tipo_pago;
             consumoEditado.categoria = categoria;
             consumoEditado.texto_libre = texto_libre;

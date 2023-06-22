@@ -15,7 +15,7 @@
     <label for="name">Consumo:</label>
     <input type="text" id="name" name="name" required><br><br>
 
-    <label for="ammount">Monto:</label>
+    <label for="ammount">Importe:</label>
     <input type="number" id="ammount" name="ammount" required><br><br>
 
     <label for="py_mtd">Tipo de Pago:</label>
@@ -27,7 +27,7 @@
     </select><br><br>
 
     <div id="paymentDetails" style="display: none;">
-      <label for="paymentAmount">Monto Total con Intereses:</label>
+      <label for="paymentAmount">Importe total con intereses:</label>
       <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0.01"><br><br>
 
       <label for="installments">Cantidad de Pagos:</label>
@@ -162,14 +162,18 @@
   <select id="ordenarPor">
     <option value="fecha">Fecha</option>
     <option value="consumo">Consumo</option>
-    <option value="monto">Monto</option>
+    <option value="importe">Importe</option>
     <option value="tipo-pago">Tipo de Pago</option>
     <option value="categoria">Categoría</option>
-    <option value="texto-libre">Texto Libre</option>
+<!--<option value="texto-libre">Texto Libre</option>
     <option value="color">Color</option>
+    <option value="fecha-asc">Fecha (ascendente)</option>
+      <option value="fecha-desc">Fecha (descendente)</option>
+      <option value="monto-mayor">Monto (mayor a menor)</option>
+      <option value="monto-menor">Monto (menor a mayor)</option>
     <option value="conintereses">Importe con intereses</option>
     <option value="cantidad-cuotas">Cantidad de cuotas</option>
-    <option value="valor-cuota">Valor de cada cuota</option>
+    <option value="valor-cuota">Valor de cada cuota</option>-->
   </select>
   <table class="gastos list-tableI">
     <thead>
@@ -177,7 +181,7 @@
   <tr>
     <th>Fecha</th>
     <th>Consumo</th>
-    <th>Monto</th>
+    <th>Importe</th>
     <th>Tipo de Pago</th>
     <th>Categoría</th>
     <th>Texto Libre</th>
@@ -194,7 +198,7 @@
     <tr>
       <td class="fecha"><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
       <td class="consumo"><%= consumo.consumo %></td>
-      <td class="monto"><%= consumo.monto  %></td>
+      <td class="importe"><%= consumo.importe  %></td>
       <td class="tipo-pago"><%= consumo.tipo_pago %></td>
       <td class="categoria"><%= consumo.categoria %></td>
       <td><%= consumo.texto_libre || '-' %></td>
@@ -211,28 +215,6 @@
 </div>
 </div>
 <script src="../javascripts/scripts.js"></script>
-<script>
-  document.getElementById('ordenarPor').addEventListener('change', function() {
-    ordenarTabla();
-  });
-
-  function ordenarTabla() {
-    var tabla = document.querySelector('.gastos');
-    var criterio = document.getElementById('ordenarPor').value;
-    var filas = Array.from(tabla.querySelectorAll('tbody tr'));
-
-    filas.sort(function(a, b) {
-      var contenidoA = a.querySelector('.' + criterio).textContent;
-      var contenidoB = b.querySelector('.' + criterio).textContent;
-      return contenidoA.localeCompare(contenidoB);
-    });
-
-    var tbody = tabla.querySelector('tbody');
-    filas.forEach(function(fila) {
-      tbody.appendChild(fila);
-    });
-  }
-</script>
 
 </body>
 </html>
