@@ -42,64 +42,63 @@ var fechaActual = new Date();
   document.getElementById('date-ingresos').value = today;
 
 
-  //ordenar por consumos
-  document.getElementById('ordenarPor').addEventListener('change', function() {
-    ordenarTabla();
+  /*function ordenarPorFechaDescendente(consumos) {
+    consumos.sort(function(a, b) {
+      var fechaA = new Date(a.fecha);
+      var fechaB = new Date(b.fecha);
+      return fechaB - fechaA;
+    });
+    return consumos;
+  }*/
+
+//mostrar titulo en rojo
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('h1').forEach(function(h1Element) {
+    h1Element.style.color = 'red';
   });
-  
-  function ordenarTabla() {
-    var tabla = document.querySelector('.gastos');
-    var criterio = document.getElementById('ordenarPor').value;
-    var filas = Array.from(tabla.querySelectorAll('tbody tr'));
-  
-    filas.sort(function(a, b) {
-      var contenidoA = obtenerContenido(a, criterio);
-      var contenidoB = obtenerContenido(b, criterio);
-  
-      if (criterio === 'importe') {
-        return parseFloat(contenidoB.contenido) - parseFloat(contenidoA.contenido);
-      } else if (criterio === 'color') {
-        // Agrupar por color y ordenar por cantidad de cada color
-        var contadorA = contarElementos(filas, criterio, contenidoA.contenido);
-        var contadorB = contarElementos(filas, criterio, contenidoB.contenido);
-        return contadorB - contadorA;
-      } else {
-        return contenidoA.contenido.localeCompare(contenidoB.contenido);
-      }
-    });
-  
-    var tbody = tabla.querySelector('tbody');
-    filas.forEach(function(fila) {
-      tbody.appendChild(fila);
-    });
-  }
-  
-  function obtenerContenido(fila, criterio) {
-    var contenido = fila.querySelector('.' + criterio).textContent;
-    return {
-      contenido: contenido,
-      tipo: isNaN(parseFloat(contenido)) ? 'texto' : 'numero'
-    };
-  }
-  
-  //orden tabla ingreso
-  document.getElementById('ordenarPorIngreso').addEventListener('change', function() {
-    ordenarTablaIngreso();
+});
+
+//mostrar datos segun fecha ultima
+document.addEventListener('DOMContentLoaded', function() {
+  ordenarTabla();
+});
+
+function ordenarTabla() {
+  var tabla = document.querySelector('.list-tableI');
+  var criterio = 'fecha';
+  var filas = Array.from(tabla.querySelectorAll('tbody tr'));
+
+  filas.sort(function(a, b) {
+    var contenidoA = obtenerContenido(a, criterio);
+    var contenidoB = obtenerContenido(b, criterio);
+
+    if (criterio === 'fecha') {
+      return new Date(contenidoB.contenido) - new Date(contenidoA.contenido);
+    } else if (criterio === 'cliente' || criterio === 'categoria') {
+      return contenidoA.contenido.localeCompare(contenidoB.contenido);
+    } else if (criterio === 'importe' || criterio === 'horas') {
+      return parseFloat(contenidoB.contenido) - parseFloat(contenidoA.contenido);
+    }
   });
+
+  var tbody = tabla.querySelector('tbody');
+  filas.forEach(function(fila) {
+    tbody.appendChild(fila);
+  });
+}
+
+function obtenerContenido(fila, criterio) {
+  var contenido = fila.querySelector('.' + criterio).textContent;
+  return {
+    contenido: contenido,
+    tipo: isNaN(parseFloat(contenido)) ? 'texto' : 'numero'
+  };
+}
+//cambiar el color de la columna importe
+window.addEventListener('DOMContentLoaded', function() {
+  var importeCells = document.querySelectorAll('.importe');
   
-  function ordenarTablaIngreso() {
-    var tabla = document.querySelector('.list-tableI');
-    var criterio = document.getElementById('ordenarPorIngreso').value;
-    var filas = Array.from(tabla.querySelectorAll('tr'));
-  
-    filas.sort(function(a, b) {
-      var contenidoA = a.querySelector('.' + criterio).textContent;
-      var contenidoB = b.querySelector('.' + criterio).textContent;
-      return contenidoA.localeCompare(contenidoB);
-    });
-  
-    var tbody = tabla.querySelector('tbody');
-    filas.forEach(function(fila) {
-      tbody.appendChild(fila);
-    });
-  }
+  importeCells.forEach(function(cell) {
+    cell.style.color = 'red';
+  });
+});
