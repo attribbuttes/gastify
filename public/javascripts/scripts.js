@@ -102,3 +102,22 @@ window.addEventListener('DOMContentLoaded', function() {
     cell.style.color = 'red';
   });
 });
+
+//anula la seleccion de color en el formulario
+var elementosColor = document.querySelectorAll('#color');
+
+// Iterar sobre los elementos y realizar acciones en cada uno
+elementosColor.forEach(function(elemento) {
+  // Hacer algo con cada elemento
+  elemento.disabled = true; // Por ejemplo, deshabilitar cada elemento
+});
+
+//boton de subir
+var scrollToTopButton = document.getElementById('scrollToTop');
+
+scrollToTopButton.addEventListener('click', function() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Hace que el desplazamiento sea suave
+  });
+});

@@ -1,4 +1,4 @@
-<%- include('./partials/head')%>
+<%- include('./partials/head') %>
 
 <body>
 
@@ -9,44 +9,55 @@
 
   <div class="table-wrapper">
     <table class="list-tableI">
-    <tr>
-      
-      <th>Fecha</th>
-      <th>Consumo</th>
-      <th>Importe</th>
-      <th>Tipo de Pago</th>
-      <th>Categoría</th>
-      <th>Texto Libre</th>
-      <th>Color</th>
-    </tr>
-    <% consumos.forEach(function(consumo) { %>
-      <tr>
-        
-        <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Consumo</th>
+          <th>Importe</th>
+          <th>Tipo de Pago</th>
+          <th>Categoría</th>
+          <th>Texto Libre</th>
+          <th>Color</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% consumos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).forEach(function(consumo) { %>
+          <tr>
+            <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+            <td><%= consumo.consumo %></td>
+            <td class="importe"><%= consumo.importe %></td>
+            <td><%= consumo.tipo_pago %></td>
+            <td><%= consumo.categoria %></td>
+            <td><%= consumo.texto_libre || '-' %></td>
+            <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
+            <td>
+              <a href="/consumos/editar/<%= consumo.id %>">Editar</a>
+              <form action="/consumos/borrar/<%= consumo.id %>" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Borrar</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-        <td><%= consumo.consumo %></td>
-        <td><%= consumo.importe %></td>
-        <td><%= consumo.tipo_pago %></td>
-        <td><%= consumo.categoria %></td>
-        <td><%= consumo.texto_libre || '-' %></td>
-        <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
-        <td>
-          <!-- Agregar botón de editar con enlace al controlador "editar" -->
-          <a href="/consumos/editar/<%= consumo.id %>">Editar</a>
-          <!-- Agregar botón de borrar con enlace al controlador "borrar" -->
-          <form action="/consumos/borrar/<%= consumo.id %>" method="POST">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit">Borrar</button>
-          </form>
-        </td>
-      </tr>
-    <% }); %>
-  </table>
-</div>
-</div>
-</div>
-<script src="../javascripts/scripts.js"></script>
+<script>
+  window.onload = function() {
+    resaltarImporte();
+  };
 
+  function resaltarImporte() {
+    var importeCells = document.querySelectorAll('.importe');
+
+    importeCells.forEach(function(cell) {
+      cell.style.color = 'red';
+    });
+  }
+</script>
 
 </body>
 </html>
