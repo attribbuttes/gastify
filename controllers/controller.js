@@ -197,6 +197,25 @@ const controller = {
             res.redirect('/');
           });
       },
+      recurrentes: async function(req, res, next) {
+        try {
+            const categoria = 'servicios';
+    
+            const consumos = await Consumo.findAll({
+                where: { categoria: categoria },
+                order: ['categoria'],
+            });
+    
+            res.render('recurrentes', { consumos });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Error al obtener los consumos recurrentes');
+        }
+    },
+    
+    /* (req, res) => {
+        res.render('recurrentes')
+      }*/
     };
     
     

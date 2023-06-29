@@ -1,0 +1,43 @@
+<%- include('./partials/head')%>
+
+<body>
+
+<%- include('./partials/navbar') %>
+
+<div class="list-containerI">
+      <h1>Servicios mensuales:</h1>
+      
+      <div class="table-wrapper">
+        <table class="list-tableI">
+        <tr>
+      <!--<th>ID</th>-->
+      <th>Fecha</th>
+      <th>Empresa/Servicio</th>
+      <th>Importe</th>
+      <th>Tipo de Pago</th>
+      <th>Categoría</th>
+      <th>Texto Libre</th>
+      <th>Color</th>
+    </tr>
+    <% consumos.forEach(function(consumo) { %>
+      <tr>
+        <!--<td><%= consumo.id %></td>-->
+        <td><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+
+        <td><%= consumo.consumo %></td>
+        <td><%= consumo.importe %></td>
+        <td><%= consumo.tipo_pago %></td>
+        <td><%= consumo.categoria %></td>
+        <td><%= consumo.texto_libre || '-' %></td>
+        <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
+    </tr>
+    <% }); %>
+    <table>
+        
+  </table>
+</div>
+</div>
+</div>
+
+</body>
+</html>

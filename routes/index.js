@@ -14,6 +14,7 @@ router.get('/categorias', controller.categorias );
 router.get('/subtotales', controller.subtotales );
 router.get('/ingresos', controller.ingresos );
 router.post('/ingresos', controller.registro);
+router.get('/recurrentes', controller.recurrentes)
 
 // Ruta para editar un consumo específico
 router.post('/consumos/editar/:id', controller.editar);
