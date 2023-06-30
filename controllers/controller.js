@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const { Consumo } = require('../database/models');
 const { Ingreso } = require('../database/models');
+const Chart = require('chart.js');
+
 
 
 const controller = {
@@ -93,6 +95,7 @@ const controller = {
           });
       
           const totalesPorCategoria = {};
+          
           consumosAgrupados.forEach(consumo => {
             const categoria = consumo.categoria;
             const importe = parseFloat(consumo.importe);
@@ -103,8 +106,18 @@ const controller = {
               totalesPorCategoria[categoria] = importe;
             }
           });
+          const chartData = {
+            labels: Object.keys(totalesPorCategoria),
+            datasets: [{
+              label: 'Totales por Categoría',
+              data: Object.values(totalesPorCategoria),
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          };
       
-          res.render('subtotales', { consumosAgrupados, totalesPorCategoria });
+          res.render('subtotales', { consumosAgrupados, totalesPorCategoria, chartData });
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener los consumos agrupados');
