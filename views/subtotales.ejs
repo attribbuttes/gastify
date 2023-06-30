@@ -47,8 +47,9 @@
 
   // Resto del código del gráfico
   const ctx = document.getElementById('myChart');
+
   new Chart(ctx, {
-    type: 'bar',
+    type: 'pie',
     data: {
       labels: categorias,
       datasets: [{
@@ -66,6 +67,13 @@
       }
     }
   });
+  var canvas = document.getElementById("myChart");
+
+// Modifica el estilo del canvas
+//canvas.style.backgroundColor = "red";
+canvas.style.border = "1px solid black";
+canvas.style.width = "500px";
+canvas.style.height = "300px";
 </script>
 
 </script>
