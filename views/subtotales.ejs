@@ -33,14 +33,27 @@
 
 
 <script>
+  const categorias = [];
+  const totales = [];
+
+  // Recorre las filas de la tabla y extrae los valores de categoría y total
+  const filas = document.querySelectorAll('tbody tr');
+  filas.forEach((fila) => {
+    const categoria = fila.querySelector('td:first-child').innerText;
+    const total = parseFloat(fila.querySelector('td:last-child').innerText);
+    categorias.push(categoria);
+    totales.push(total);
+  });
+
+  // Resto del código del gráfico
   const ctx = document.getElementById('myChart');
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: categorias,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'En cantidad de dinero',
+        data: totales,
         borderWidth: 1
       }]
     },
@@ -53,6 +66,8 @@
       }
     }
   });
+</script>
+
 </script>
 
 
