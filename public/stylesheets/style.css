@@ -328,3 +328,14 @@ h1 {
 .list-containerI{
   margin-top: 50px;
 }
+
+
+  #mesCorriente {
+    font-size: 18px;
+    font-weight: bold;
+    color: blue;
+    background-color: lightgray;
+    padding: 10px;
+    border: 1px solid black;
+  }
+

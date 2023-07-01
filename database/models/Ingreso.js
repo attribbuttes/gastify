@@ -8,7 +8,7 @@ const Ingreso = sequelize.define('Ingreso', {
     autoIncrement: true
   },
   importe: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.INTEGER,
     allowNull: true
   },
   cliente: {

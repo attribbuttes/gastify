@@ -3,6 +3,10 @@ var router = express.Router();
 const { Consumo } = require('../database/models');
 const { Ingreso } = require('../database/models');
 const Chart = require('chart.js');
+const { Op } = require('sequelize');
+const Sequelize = require('sequelize');
+
+
 
 
 
@@ -129,10 +133,78 @@ const controller = {
         try {
           const ingresos = await Ingreso.findAll();
           //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
-          res.render('ingresos', { ingresos }); // Pasar los montos a la vista
+          const currentDate  = new Date();
+          const currentMonth  = currentDate.getMonth() + 1; // Los meses en JavaScript son indexados desde 0, por lo que sumamos 1 para obtener el mes actual.
+          const currentYear = currentDate.getFullYear();
+          const ingresosFiltrados = await Ingreso.findAll({
+            where: {
+              // Filtramos por el mes y año actual
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+                ]
+              }
+            }
+          });
+          
+          const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+            return total + ingreso.importe;
+          }, 0);
+          // Obtener el mes pasado
+          const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+          const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+          
+          const ingresosMesPasado = await Ingreso.findAll({
+            where: {
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+                ]
+              }
+            }
+          });
+          const sumaImportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+            return total + ingreso.importe;
+          }, 0);
+
+          res.render('ingresos', { ingresos,sumaImportes, ingresosMesPasado:ingresosMesPasado,sumaImportesMesPasado }); // Pasar los montos a la vista
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener los consumos');
+        }
+      },
+      
+      ingresosMesPasado: async (req, res) => {
+        try {
+          const currentDate = new Date();
+          const currentMonth = currentDate.getMonth() + 1;
+          const currentYear = currentDate.getFullYear();
+      
+          // Obtener el mes pasado
+          const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+          const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+      
+          const ingresosFiltrados = await Ingreso.findAll({
+            where: {
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+                ]
+              }
+            }
+          });
+      
+          const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+            return total + ingreso.importe;
+          }, 0);
+      
+          res.render('ingresos', { ingresos: ingresosFiltrados, sumaImportes });
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al obtener los ingresos del mes pasado');
         }
       },
       //ingresos

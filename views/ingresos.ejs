@@ -6,17 +6,21 @@
 
 <div class="list-containerI">
     <h1>Lista de Ingresos</h1>
-  <div class="table-wrapper">
+    
+    <p><span id="mesCorriente">el total de ingresos mensuales hasta hoy es <%=sumaImportes%></span></p>
+    <p><span id="mesCorriente">el total de ingresos del mes pasado fue  <%=sumaImportesMesPasado%></span></p>
+  <!--<div class="table-wrapper">
     <select id="ordenarPorIngreso">
     <option value="fecha">Fecha</option>
     <option value="cliente">Cliente</option>
     <option value="importe">Importe</option>
     <option value="tipo-pago">Tipo de Pago</option>
     <option value="categoria">Categoría</option>
-  </select>
+  </select>-->
   <table class="list-tableI">
     <tr>
-      
+      <span id="total"></span>
+
       <th>Fecha</th>
       <th>Cliente</th>
       <th>Cobrado</th>
@@ -47,6 +51,59 @@
     </tr>
     <% }); %>
   </table>
+  <div>
+    <canvas id="myChart"></canvas>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    
+    <script>
+      const categorias = [];
+      const totales = [];
+    
+      // Recorre las filas de la tabla y extrae los valores de categoría y total
+      const filas = document.querySelectorAll('tbody tr');
+      filas.forEach((fila) => {
+        const categoria = fila.querySelector('td:first-child').innerText;
+        const total = parseFloat(fila.querySelector('td:last-child').innerText);
+        categorias.push(categoria);
+        totales.push(total);
+      });
+    
+      // Resto del código del gráfico
+      const ctx = document.getElementById('myChart');
+    
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: categorias,
+          datasets: [{
+            label: 'En cantidad de dinero',
+            data: totales,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      var canvas = document.getElementById("myChart");
+    
+    // Modifica el estilo del canvas
+    //canvas.style.backgroundColor = "red";
+    canvas.style.border = "1px solid black";
+    canvas.style.width = "500px";
+    canvas.style.height = "300px";
+    </script>
+    
+    
+
 </div>
 </div>
 </div>
