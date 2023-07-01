@@ -176,37 +176,7 @@ const controller = {
         }
       },
       
-      ingresosMesPasado: async (req, res) => {
-        try {
-          const currentDate = new Date();
-          const currentMonth = currentDate.getMonth() + 1;
-          const currentYear = currentDate.getFullYear();
       
-          // Obtener el mes pasado
-          const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
-          const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
-      
-          const ingresosFiltrados = await Ingreso.findAll({
-            where: {
-              fecha: {
-                [Op.and]: [
-                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
-                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
-                ]
-              }
-            }
-          });
-      
-          const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
-            return total + ingreso.importe;
-          }, 0);
-      
-          res.render('ingresos', { ingresos: ingresosFiltrados, sumaImportes });
-        } catch (error) {
-          console.error(error);
-          res.status(500).send('Error al obtener los ingresos del mes pasado');
-        }
-      },
       //ingresos
       registro:  async (req, res) => {
         try {
