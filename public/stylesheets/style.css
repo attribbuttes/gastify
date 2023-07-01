@@ -16,13 +16,17 @@ body {
   color: #fff;
   padding: 10px;
   position: fixed;
+  width: 100%;
+
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
   
 }
-
+li {
+  float: left;
+}
 .navbar-list {
   list-style-type: none;
   margin: 0;
@@ -339,3 +343,13 @@ h1 {
     border: 1px solid black;
   }
 
+
+  @media (max-width: 768px) {
+    nav {
+      font-size: 14px;
+    }
+  
+    li a {
+      padding: 6px 12px;
+    }
+  }

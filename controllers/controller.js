@@ -25,8 +25,46 @@ const controller = {
       consumos:  async (req, res) => {
         try {
           const consumos = await Consumo.findAll();
-          const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
-          res.render('consumos', { consumos, montos }); // Pasar los montos a la vista
+          /*const montos = consumos.map(consumo => consumo.monto_total);*/// Obtener los montos de los consumos
+          const currentDate  = new Date();
+          const currentMonth  = currentDate.getMonth() + 1; // Los meses en JavaScript son indexados desde 0, por lo que sumamos 1 para obtener el mes actual.
+          const currentYear = currentDate.getFullYear();
+          const gastosFiltrados = await Consumo.findAll({
+            where: {
+              // Filtramos por el mes y año actual
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+                ]
+              }
+            }
+          });
+          
+          const sumaConsumos = gastosFiltrados.reduce((total, consumo) => {
+            return total + consumo.importe;
+          }, 0);
+          // Obtener el mes pasado
+          const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+          const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+          /*----*/
+          const consumosMesPasado = await Consumo.findAll({
+            where: {
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+                ]
+              }
+            }
+          });
+          const sumaConsumosMesPasado = consumosMesPasado.reduce((total, consumo) => {
+            return total + consumo.importe;
+          }, 0);
+/*-----*/
+
+
+          res.render('consumos', { consumos, sumaConsumos, consumosMesPasado:consumosMesPasado, sumaConsumosMesPasado /*montos */}); // Pasar los montos a la vista
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener los consumos');
@@ -267,7 +305,12 @@ const controller = {
             res.status(500).send('Error al obtener los consumos recurrentes');
         }
     },
-    
+    cargarGasto: (req,res)=>{
+      res.render('addConsumo')
+    },
+    cargarIngreso: (req,res)=>{
+      res.render('addIngreso')
+    }
     /* (req, res) => {
         res.render('recurrentes')
       }*/

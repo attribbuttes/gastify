@@ -19,7 +19,7 @@ Consumo.init(
       allowNull: false
     },
     importe: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     tipo_pago: {
