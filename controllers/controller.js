@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const { Consumo } = require('../database/models');
 const { Ingreso } = require('../database/models');
+const { Pago } = require('../database/models');
+
 const Chart = require('chart.js');
 const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
@@ -310,7 +312,84 @@ const controller = {
     },
     cargarIngreso: (req,res)=>{
       res.render('addIngreso')
-    }
+    },
+    cargarPago: (req,res)=>{
+      res.render('addPago')
+    },
+    pagos:  async (req, res) => {
+        try {
+          const pagos = await Pago.findAll();
+          //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
+          const currentDate  = new Date();
+          const currentMonth  = currentDate.getMonth() + 1; // Los meses en JavaScript son indexados desde 0, por lo que sumamos 1 para obtener el mes actual.
+          const currentYear = currentDate.getFullYear();
+          const pagosFiltrados = await Pago.findAll({
+            where: {
+              // Filtramos por el mes y año actual
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+                ]
+              }
+            }
+          });
+          
+          const sumaPagos = pagosFiltrados.reduce((total, pago) => {
+            return total + pago.importe;
+          }, 0);
+          // Obtener el mes pasado
+          const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+          const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+          
+          const pagosMesPasado = await Pago.findAll({
+            where: {
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+                ]
+              }
+            }
+          });
+          const sumaPagosMesPasado = pagosMesPasado.reduce((total, pago) => {
+            return total + pago.importe;
+          }, 0);
+
+          res.render('pagos', { pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }); // Pasar los montos a la vista
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al obtener los consumos');
+        }
+      },
+      nuevoPago:  async (req, res) => {
+        try {
+          const { date, name, ammount, text, id_fk } = req.body;
+      
+          
+          
+      
+          // Guardar los datos en la base de datos utilizando el modelo Consumo
+          await Pago.create({
+            fecha: date,
+            cliente: name,
+            importe: ammount,
+            text: text,
+            id_fk: id_fk,
+      
+          });
+          
+      
+          const pagos = await Pago.findAll();
+          
+          res.render('pagos', { title: 'Express', pagos }); // Pasar los montos a la vista
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al guardar los datos: ${error.message}');
+        }
+      },
+      
+    
     /* (req, res) => {
         res.render('recurrentes')
       }*/

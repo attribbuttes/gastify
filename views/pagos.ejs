@@ -1,0 +1,45 @@
+<%- include('./partials/head')%>
+
+<body>
+
+<%- include('./partials/navbar') %>
+
+<div class="list-containerI">
+      <h1>Pagos</h1>
+      <a href="/cargarPago" id='mesCorriente'>Sumar Pago Nuevo<i class="fa-solid fa-plus"></i></i></a> </i>
+
+  <p><span id="mesCorriente">el total de pagos mensuales hasta hoy es <%=sumaPagos%></span></p>
+  <p><span id="mesCorriente">el total de pagos del mes pasado fue <%=sumaPagosMesPasado%> </span></p>
+
+      <div class="table-wrapper">
+        <table class="list-tableI">
+        <tr>
+      <!--<th>ID</th>-->
+      <th>Fecha</th>
+      <th>Empresa</th>
+      <th>Importe</th>
+      <th>Texto</th>
+      <th>Conexion</th>
+      
+    </tr>
+    <% pagos.forEach(function(pago) { %>
+      <tr>
+        <!--<td><%= pagos.id %></td>-->
+        <td><%= pagos.fecha ? new Date(pago.fecha).toISOString().slice(0, 10) : '-' %></td>
+        <td><%= pagos.empresa %></td>
+        <td><%= pagos.importe %></td>
+        <td><%= pagos.texto %></td>
+        <td><%= pagos.id_fk %></td>
+        
+        <td><div style="width: 20px; height: 20px; background-color: <%= pagos.color %>"></div></td>
+    </tr>
+    <% }); %>
+    <table>
+        
+  </table>
+</div>
+</div>
+</div>
+
+</body>
+</html>

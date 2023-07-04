@@ -17,6 +17,8 @@ router.post('/ingresos', controller.registro);
 router.get('/recurrentes', controller.recurrentes)
 router.get('/cargarGasto', controller.cargarGasto)
 router.get('/cargarIngreso', controller.cargarIngreso)
+router.get('/pagos', controller.pagos)
+router.get('/cargarPago', controller.cargarPago)
 
 // Ruta para editar un consumo específico
 router.post('/consumos/editar/:id', controller.editar);

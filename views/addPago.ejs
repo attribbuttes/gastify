@@ -1,0 +1,67 @@
+<%- include('./partials/head') %>
+
+<body>
+
+<%- include('./partials/navbar') %>      
+
+<div class="list-container">
+<div class="form-wrapper">
+    <h1>Formulario de Carga de Pagos</h1>
+    
+    <form id="formulario" action="/pagos" method="POST">
+      <label for="date">Fecha:</label>
+      <input type="date" id="date-pagos" name="date" required><br><br>
+  
+      <label for="name">Empresa</label>
+      <input type="text" id="empresa" name="name" required><br><br>
+  
+      <label for="ammount">Importe $</label>
+      <input type="number" id="ammount" name="ammount" required><br><br>
+      
+      <label for="horas">Texto Libre</label>
+      <input type="text" id="horas" name="text" required><br><br>
+  
+      <!--<label for="py_mtd">Tipo de Pago:</label>
+      <select id="py_mtd" name="py_mtd">
+        <option value="efectivo">Efectivo</option>
+        <option value="transfer">Transferencia</option>
+        <option value="debito">Débito</option>
+        <option value="otro">Otro</option>
+      </select><br><br>
+  
+      <label for="category">Categoría de trabajo:</label>
+      <select id="category" name="category">
+        <option value="jardineria" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Jardinería
+        </option>
+        <option value="arreglos" data-color="#00FF00" class="categoria-option">
+          <span class="categoria-color" style="background-color: #00FF00;"></span>
+          Arreglos
+        </option>
+        <option value="otro" data-color="#FF0000" class="categoria-option">
+          <span class="categoria-color" style="background-color: #FF0000;"></span>
+          Otro
+        </option>
+      </select><br><br>
+  
+      <label for="texto-libre">Texto Libre:</label>
+      <input type="text" id="texto-libre" name="texto_libre" style="width: 300px; height: 100px;" maxlength="200"><br><br>
+  
+      <label for="color">Color:</label>
+      <select id="color" name="color">
+        <option value="#FF0000" style="background-color: #ffffff;">Blanco Luz</option>
+        <option value="#FF0000" style="background-color: #FF0000;">Rojo</option>
+        <option value="#00FF00" style="background-color: #00FF00;">Verde</option>
+        <option value="#0000FF" style="background-color: #0000FF;">Azul</option>
+        <option value="#FFFF00" style="background-color: #FFFF00;">Amarillo</option>
+        <option value="#FF00FF" style="background-color: #FF00FF;">Magenta</option>
+        <option value="#00FFFF" style="background-color: #00FFFF;">Cian</option>
+        <option value="#000000" style="background-color: #000000; color: #FFFFFF;">Negro</option>
+      </select><br><br>
+    -->
+      <input type="submit" value="Guardar">
+    </form>
+  </div>
+  </div>
+  
