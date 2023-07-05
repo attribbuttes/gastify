@@ -20,7 +20,7 @@ router.get('/cargarIngreso', controller.cargarIngreso)
 router.get('/pagos', controller.pagos)
 router.get('/cargarPago', controller.cargarPago)
 router.post('/cargarPago', controller.nuevoPago)
-
+router.get('/registroDeServicios', controller.ayuda)
 
 // Ruta para editar un consumo específico
 router.post('/consumos/editar/:id', controller.editar);

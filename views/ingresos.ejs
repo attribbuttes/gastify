@@ -18,7 +18,7 @@
     <option value="tipo-pago">Tipo de Pago</option>
     <option value="categoria">Categoría</option>
   </select>-->
-  <table class="list-tableI">
+  <table id="tablaIngresos" class="list-tableI">
     <tr>
       <span id="total"></span>
 
@@ -60,6 +60,31 @@
     
     
     <script>
+      //aca se acomdan los numeros por descendente
+      function ordenarPorFechaDescendente() {
+  var table = document.getElementById("tablaIngresos");
+  var rows = Array.from(table.rows).slice(1); // Obtén todas las filas de la tabla, excepto la primera (encabezados)
+
+  rows.sort(function(a, b) {
+    var fechaA = new Date(a.cells[0].innerText); // La fecha se encuentra en la primera celda (índice 0) de cada fila
+    var fechaB = new Date(b.cells[0].innerText);
+
+    return fechaB - fechaA; // Ordena en forma descendente
+  });
+
+  // Elimina las filas existentes de la tabla
+  while (table.rows.length > 1) {
+    table.deleteRow(1);
+  }
+
+  // Agrega las filas ordenadas nuevamente a la tabla
+  rows.forEach(function(row) {
+    table.appendChild(row);
+  });
+}
+
+ordenarPorFechaDescendente(); // Llama a la función para ordenar inicialmente la tabla al cargar la página
+
       const categorias = [];
       const totales = [];
     
@@ -102,6 +127,8 @@
     canvas.style.width = "500px";
     canvas.style.height = "300px";
     </script>
+
+
     
     
 

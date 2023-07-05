@@ -391,7 +391,9 @@ const controller = {
           res.status(500).send('Error al guardar los datos: ${error.message}');
         }
       },
-      
+      ayuda: (req,res)=>{
+        res.render('registroDeServicios')
+      }
     
     /* (req, res) => {
         res.render('recurrentes')

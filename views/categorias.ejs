@@ -8,7 +8,7 @@
       <h1>Consumos agrupados por categoría:</h1>
 
       <div class="table-wrapper">
-        <table class="list-tableI">
+        <table id="tablaIngresos" class="list-tableI">
         <tr>
       <!--<th>ID</th>-->
       <th>Fecha</th>
@@ -36,6 +36,40 @@
         
   </table>
 </div>
+<script>
+  //este script es para ordenar por x categoria y agrupar mensual
+  //aca se acomdan los numeros por descendente
+  function ordenarTablaPorCategoriaYMes() {
+  var table = document.getElementById("tablaIngresos");
+  var rows = Array.from(table.rows).slice(1); // Obtén todas las filas de la tabla, excepto la primera (encabezados)
+
+  rows.sort(function(a, b) {
+    var fechaA = new Date(a.cells[0].innerText); // La fecha se encuentra en la primera celda (índice 0) de cada fila
+    var fechaB = new Date(b.cells[0].innerText);
+    var categoriaA = a.cells[4].innerText; // La categoría se encuentra en la quinta celda (índice 4) de cada fila
+    var categoriaB = b.cells[4].innerText;
+
+    // Ordena primero por categoría y luego por fecha (en caso de que la categoría sea la misma)
+    if (categoriaA === categoriaB) {
+      return fechaB - fechaA; // Ordena las fechas en forma descendente
+    } else {
+      return categoriaA.localeCompare(categoriaB); // Ordena las categorías alfabéticamente
+    }
+  });
+
+  // Elimina las filas existentes de la tabla
+  while (table.rows.length > 1) {
+    table.deleteRow(1);
+  }
+
+  // Agrega las filas ordenadas nuevamente a la tabla
+  rows.forEach(function(row) {
+    table.appendChild(row);
+  });
+}
+
+ordenarTablaPorCategoriaYMes();
+  </script>
 </div>
 </div>
 
