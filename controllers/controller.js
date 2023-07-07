@@ -3,6 +3,8 @@ var router = express.Router();
 const { Consumo } = require('../database/models');
 const { Ingreso } = require('../database/models');
 const { Pago } = require('../database/models');
+const { Cliente } = require('../database/models');
+
 
 const Chart = require('chart.js');
 const { Op } = require('sequelize');
@@ -218,14 +220,10 @@ const controller = {
       
       
       //POST ingresos
-      registro:  async (req, res) => {
+      registro: async (req, res) => {
         try {
           const { date, name, ammount, py_mtd, horas, color, category, texto_libre } = req.body;
       
-          let monto_total = 0;
-          
-      
-          // Guardar los datos en la base de datos utilizando el modelo Consumo
           await Ingreso.create({
             fecha: date,
             cliente: name,
@@ -233,22 +231,59 @@ const controller = {
             tipo_pago: py_mtd,
             horas: horas,
             categoria: category,
-            color:color,
+            color: color,
             texto: texto_libre,
-            
-      
           });
-          
       
           const ingresos = await Ingreso.findAll();
-          //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
+          const currentDate = new Date();
+          const currentMonth = currentDate.getMonth() + 1;
+          const currentYear = currentDate.getFullYear();
+          const ingresosFiltrados = await Ingreso.findAll({
+            where: {
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+                ]
+              }
+            }
+          });
       
-          res.render('ingresos', { title: 'Express', ingresos/* montos*/ }); // Pasar los montos a la vista
+          const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+            return total + ingreso.importe;
+          }, 0);
+      
+          const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+          const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+          const ingresosMesPasado = await Ingreso.findAll({
+            where: {
+              fecha: {
+                [Op.and]: [
+                  Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+                  Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+                ]
+              }
+            }
+          });
+      
+          const sumaImportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+            return total + ingreso.importe;
+          }, 0);
+      
+          res.render('ingresos', {
+            title: 'Express',
+            ingresos,
+            sumaImportes,
+            ingresosMesPasado,
+            sumaImportesMesPasado
+          });
         } catch (error) {
           console.error(error);
-          res.status(500).send('Error al guardar los datos: ${error.message}');
+          res.status(500).send(`Error al guardar los datos: ${error.message}`);
         }
       },
+      
 
       editar: async function (req, res, next) {
         try {
@@ -316,7 +351,88 @@ const controller = {
     cargarPago: (req,res)=>{
       res.render('addPago')
     },
+    clientes: async (req, res) => {
+      try {
+        const clientes = await Cliente.findAll();
+        res.render('clientes', {clientes}/*{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }*/); // Pasar los montos a la vista
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error al obtener los consumos');
+        }
+    },
 
+    cargarCliente: async (req, res) => {
+      try {
+        res.render('addCliente')
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener los consumos');
+      }
+  },
+    nuevoCliente:  async (req, res) => {
+      try {
+        const { date, name, ammount, id_fk, py_mtd, horas, color, category, texto_libre } = req.body;
+    
+        await Cliente.create({
+          fecha: date,
+          nombre: name,
+          importe: ammount,
+          como_paga: py_mtd,
+          horas: horas,
+          id_fk: id_fk,
+          categoria: category,
+          color: color,
+          texto: texto_libre,
+        });
+    
+        const clientes = await Cliente.findAll();
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1;
+        const currentYear = currentDate.getFullYear();
+        const ingresosFiltrados = await Cliente.findAll({
+          where: {
+            fecha: {
+              [Op.and]: [
+                Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+                Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+              ]
+            }
+          }
+        });
+    
+        const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+          return total + ingreso.importe;
+        }, 0);
+    
+        const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+        const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+        const ingresosMesPasado = await Ingreso.findAll({
+          where: {
+            fecha: {
+              [Op.and]: [
+                Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+                Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+              ]
+            }
+          }
+        });
+    
+        const sumaImportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+          return total + ingreso.importe;
+        }, 0);
+    
+        res.render('clientes', {
+          title: 'Express',
+          clientes,
+          sumaImportes,
+          ingresosMesPasado,
+          sumaImportesMesPasado
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send(`Error al guardar los datos: ${error.message}`);
+      }
+    },
     //GET PAGOS
     pagos:  async (req, res) => {
         try {
