@@ -23,15 +23,15 @@
     </tr>
     <% clientes.forEach(function(cliente) { %>
       <tr>
-        <!--<td><%= consumo.id %></td>-->
-        <td><%= cliente.fecha ? new Date(clientes.fecha).toISOString().slice(0, 10) : '-' %></td>
+        <!--<td><%= cliente.id %></td>-->
+        <td><%= cliente.fecha ? new Date(cliente.fecha).toISOString().slice(0, 10) : '-' %></td>
 
         <td><%= cliente.nombre %></td>
         <td><%= cliente.importe %></td>
         <td><%= cliente.como_paga %></td>
         <td><%= cliente.id_fk %></td>
         <td><%= cliente.texto_libre || '-' %></td>
-        <td><div style="width: 20px; height: 20px; background-color: <%= consumo.color %>"></div></td>
+        <td><div style="width: 20px; height: 20px; background-color: <%= cliente.color %>"></div></td>
     </tr>
     <% }); %>
     <table>
