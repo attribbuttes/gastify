@@ -28,6 +28,10 @@ router.get('/subtotales', controller.subtotales );
 router.get('/recurrentes', controller.recurrentes)
 router.get('/registroDeServicios', controller.ayuda)
 router.get('/clientes', controller.clientes)
+router.get('/heladera', controller.heladera)
+router.get('/pronosticos', controller.pronosticos)
+
+
 
 
 // Ruta para editar un consumo específico
