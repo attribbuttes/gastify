@@ -125,7 +125,6 @@ const controller = {
   ingresos: async (req, res) => {
     try {
       const ingresos = await Ingreso.findAll();
-      //const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
       const currentDate = new Date();
       const currentMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son indexados desde 0, por lo que sumamos 1 para obtener el mes actual.
       const currentYear = currentDate.getFullYear();
@@ -377,8 +376,104 @@ const controller = {
       res.status(500).send('Error al obtener los consumos agrupados');
     }
   },
+
+
   subtotales: async function (req, res, next) {
     try {
+      const consumos = await Consumo.findAll();
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
+      const consumosAgrupados = await Consumo.findAll({
+        order: ['categoria'],
+      });
+  
+      const totalesPorCategoria = {};
+  
+      consumosAgrupados.forEach(consumo => {
+        const categoria = consumo.categoria;
+        const importe = parseFloat(consumo.importe);
+  
+        if (totalesPorCategoria[categoria]) {
+          totalesPorCategoria[categoria] += importe;
+        } else {
+          totalesPorCategoria[categoria] = importe;
+        }
+      });
+  
+      const subtotalesFiltrados = await Consumo.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+  
+      const sumaSubtotales = subtotalesFiltrados.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+  
+      // Obtener el mes pasado
+      const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+      const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+      const subtotalesMesPasado = await Consumo.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+  
+      const sumaSubtotalesMesPasado = subtotalesMesPasado.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+  
+      const chartDataMesActual = {
+        labels: Object.keys(totalesPorCategoria),
+        datasets: [{
+          label: 'Totales por Categoría (Mes Actual)',
+          data: Object.values(totalesPorCategoria),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      };
+  
+      const chartDataMesPasado = {
+        labels: Object.keys(totalesPorCategoria),
+        datasets: [{
+          label: 'Totales por Categoría (Mes Pasado)',
+          data: Object.values(totalesPorCategoria),
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      };
+  
+      res.render('subtotales', { totalesPorCategoria, sumaSubtotales, sumaSubtotalesMesPasado, chartDataMesActual, chartDataMesPasado });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los consumos agrupados');
+    }
+  },
+  
+
+
+
+  /*
+  subtotales: async function (req, res, next) {
+    try {
+      const consumos = await Consumo.findAll();
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
       const consumosAgrupados = await Consumo.findAll({
         order: ['categoria'],
       });
@@ -395,6 +490,39 @@ const controller = {
           totalesPorCategoria[categoria] = importe;
         }
       });
+
+      const subtotalesFiltrados = await Consumo.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+
+      const sumaSubtotales = subtotalesFiltrados.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+      // Obtener el mes pasado
+      const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+      const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+      const subtotalesMesPasado = await Consumo.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+      const sumaSubtotalesMesPasado = subtotalesMesPasado.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+
       const chartData = {
         labels: Object.keys(totalesPorCategoria),
         datasets: [{
@@ -406,12 +534,17 @@ const controller = {
         }]
       };
 
-      res.render('subtotales', { consumosAgrupados, totalesPorCategoria, chartData });
+
+
+
+
+
+      res.render('subtotales', { sumaSubtotales, subtotalesMesPasado, sumaSubtotalesMesPasado, consumosAgrupados, totalesPorCategoria, chartData });
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al obtener los consumos agrupados');
     }
-  },
+  },*/
 
 
 
