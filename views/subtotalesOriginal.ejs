@@ -5,7 +5,7 @@
 <%- include('./partials/navbar') %>    
 
 <div class="list-containerI">
-<h1>Subtotales Agrupados por Categorías</h1>
+<h1>Lista de Categorías</h1>
 
 <a id='mesCorriente' href="/cargarIngreso">Cargar Ingreso<i class="fa-solid fa-plus"></i></i></a> </i>
     <p><span id="mesCorriente">el total de ingresos mensuales hasta hoy es <%=sumaSubtotales%></span></p>
@@ -13,7 +13,7 @@
 <div class="table-wrapper">
 
   <table class="list-tableI">
-    <h2>mes actual</h2>
+
   <thead>
     <tr>
       <th>Categoría</th>
@@ -29,24 +29,6 @@
     <% }); %>
   </tbody>
 </table>
-
-<table class="list-tableI">
-<h2>mes pasado</h2>
-    <thead>
-      <tr>
-        <th>Categoría</th>
-        <th>Total Gastos</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
-        <tr>
-          <td><%= categoria %></td>
-          <td><%= total.toFixed(2) %></td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
 
 <p><div>
 <canvas id="myChart"></canvas>
