@@ -19,6 +19,12 @@ router.get('/pagos', controller.pagos)
 router.get('/cargarPago', controller.cargarPago)
 router.post('/cargarPago', controller.nuevoPago)
 
+router.get('/servicios', controller.servicios)
+router.get('/cargarServicio', controller.cargarServicio)
+router.post('/cargarServicio', controller.nuevoServicio)
+router.get('/registroDeServicios', controller.ayuda)
+
+
 router.get('/clientes', controller.clientes)
 router.get('/cargarCliente', controller.cargarCliente)
 router.post('/clientes', controller.nuevoCliente)
@@ -26,7 +32,7 @@ router.post('/clientes', controller.nuevoCliente)
 router.get('/categorias', controller.categorias );
 router.get('/subtotales', controller.subtotales );
 router.get('/recurrentes', controller.recurrentes)
-router.get('/registroDeServicios', controller.ayuda)
+
 router.get('/clientes', controller.clientes)
 router.get('/heladera', controller.heladera)
 router.get('/pronosticos', controller.pronosticos)

@@ -4,6 +4,8 @@ const { Consumo } = require('../database/models');
 const { Ingreso } = require('../database/models');
 const { Pago } = require('../database/models');
 const { Cliente } = require('../database/models');
+const { Servicio } = require('../database/models');
+
 
 
 const Chart = require('chart.js');
@@ -282,6 +284,51 @@ const controller = {
     res.render('addPago')
   },
   //hasta aca pagos
+
+  //cargar servicios
+  servicios: async (req, res) => {
+    try {
+      const servicios = await Servicio.findAll();
+
+
+      res.render('servicios', { servicios }/*{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }*/); // Pasar los montos a la vista
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los consumos');
+    }
+  },
+  cargarServicio: (req, res) => {
+    res.render('addServicio')
+  },
+  nuevoServicio: async (req, res) => {
+    try {
+      const { date, name, ammount, text, py_mtd, id_fk, } = req.body;
+
+      
+      // Guardar los datos en la base de datos utilizando el modelo Consumo
+      await Servicio.create({
+        fecha: date,
+        empresa: name,
+        importe: ammount,
+        como_se_paga: py_mtd,
+        id_fk: id_fk,
+        texto_libre:text,
+
+
+      });
+
+
+      const servicios = await Servicio.findAll();
+
+      res.render('servicios', { servicios }); // Pasar los montos a la vista
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al guardar los datos');
+    }
+  },
+
+  //fin de servicios
+
 
   //get, post y formulario de clientes
 
