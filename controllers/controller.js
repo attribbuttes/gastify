@@ -647,9 +647,52 @@ const controller = {
   },
 
 
-  ayuda: (req, res) => {
-    res.render('registroDeServicios')
+  ayuda: async (req, res) => {
+    try {
+      const servicios = await Servicio.findAll();
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son indexados desde 0, por lo que sumamos 1 para obtener el mes actual.
+      const currentYear = currentDate.getFullYear();
+      const serviciosFiltrados = await Servicio.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+      const sumaServicios = serviciosFiltrados.reduce((total, servicio) => {
+        return total + servicio.importe;
+      }, 0);
+      // Obtener el mes pasado
+      const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+      const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+      const serviciosMesPasado = await Servicio.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+
+      const sumaServiciosMesPasado = serviciosMesPasado.reduce((total, servicio) => {
+        return total + servicio.importe;
+      }, 0);
+
+      res.render('registroDeServicios', { servicios, sumaServiciosMesPasado, sumaServicios }/*{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }*/); // Pasar los montos a la vista
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los consumos');
+    }
   },
+    
+  
   clientes: async (req, res) => {
     try {
       const clientes = await Cliente.findAll();

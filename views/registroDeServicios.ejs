@@ -1,0 +1,48 @@
+
+<%- include('./partials/head')%>
+
+<body>
+
+<%- include('./partials/navbar') %>   
+
+<div class="list-containerI">
+  
+    <h1>Lista de Servicios y pagos mensuales</h1>
+    <a href="/cargarServicio" id='mesCorriente'>Sumar nuevo servicio o pago recurrente<i class="fa-solid fa-plus"></i></i></a> </i>
+   <p><span id="mesCorriente">el total de pagos de servicios mensuales hasta hoy es <%=sumaServicios%></span></p>
+      <p><span id="mesCorriente">el total de pagos de servicios mensuales del mes pasado fue  <%=sumaServiciosMesPasado%></span></p>
+   <!-- <div class="table-wrapper">
+    <table class="list-tableI">
+      <tr>
+        <th>Fecha</th>
+        <th>Empresa/Servicio</th>
+        <th>Importe</th>
+        <th>Tipo de Pago</th>
+        <th>Clave vincular</th>
+        <th>Texto Libre</th>
+        
+      </tr>
+      <% servicios.forEach(function(servicio) { %>
+        <tr>
+        
+          <td><%= servicio.fecha ? new Date(servicio.fecha).toISOString().slice(0, 10) : '-' %></td>
+  
+          <td><%= servicio.empresa %></td>
+          <td><%= servicio.importe %></td>
+          <td><%= servicio.como_se_paga %></td>
+          <td><%= servicio.id_fk %></td>
+          <td><%= servicio.texto_libre || '-' %></td>
+          <td><div style="width: 20px; height: 20px; background-color: <%= servicio.color %>"></div></td>
+          
+        </tr>
+      <% }); %>
+    </table>
+  </div>-->
+  </div>
+  </div>
+  <script src="../javascripts/scripts.js"></script>
+  
+  
+  </body>
+  </html>
+  
