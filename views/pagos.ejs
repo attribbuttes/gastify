@@ -15,9 +15,9 @@
         <table class="list-tableI">
         <tr>
       <!--<th>ID</th>-->
-      <th>Fecha</th>
-      <th>Empresa</th>
-      <th>Importe</th>
+      <th>fecha</th>
+      <th>empresa</th>
+      <th>importe</th>
       <th>Texto</th>
       <th>Conexion</th>
       
@@ -25,9 +25,9 @@
     <% pagos.forEach(function(pago) { %>
       <tr>
         
-        <td><%= pago.Fecha ? new Date(pago.Fecha).toISOString().slice(0, 10) : '-' %></td>
-        <td><%= pago.Empresa %></td>
-        <td><%= pago.Importe %></td>
+        <td><%= pago.fecha ? new Date(pago.fecha).toISOString().slice(0, 10) : '-' %></td>
+        <td><%= pago.empresa %></td>
+        <td><%= pago.importe %></td>
         <td><%= pago.texto %></td>
         <td><%= pago.id_fk %></td>
         

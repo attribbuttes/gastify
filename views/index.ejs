@@ -9,13 +9,13 @@
   <h1>Formulario de Carga de Gastos</h1>
 
   <form id="formulario" action="/guardar" method="POST">
-    <label for="date">Fecha:</label>
+    <label for="date">fecha:</label>
     <input type="date" id="date" name="date" required><br><br>
 
     <label for="name">Consumo:</label>
     <input type="text" id="name" name="name" required><br><br>
 
-    <label for="ammount">Importe:</label>
+    <label for="ammount">importe:</label>
     <input type="number" id="ammount" name="ammount" required><br><br>
 
     <label for="py_mtd">Tipo de Pago:</label>
@@ -27,7 +27,7 @@
     </select><br><br>
 
     <div id="paymentDetails" style="display: none;">
-      <label for="paymentAmount">Importe total con intereses:</label>
+      <label for="paymentAmount">importe total con intereses:</label>
       <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0.01"><br><br>
 
       <label for="installments">Cantidad de Pagos:</label>
@@ -100,7 +100,7 @@
   <h1>Formulario de Carga de Ingresos</h1>
 
   <form id="formulario" action="/ingresos" method="POST">
-    <label for="date">Fecha:</label>
+    <label for="date">fecha:</label>
     <input type="date" id="date-ingresos" name="date" required><br><br>
 
     <label for="name">Cliente/trabajo:</label>
@@ -165,18 +165,18 @@
 <h1>Tabla de Gastos</h1>
 <div class="table-wrapper">
   <select id="ordenarPor">
-    <option value="fecha">Fecha</option>
+    <option value="fecha">fecha</option>
     <option value="consumo">Consumo</option>
-    <option value="importe">Importe</option>
+    <option value="importe">importe</option>
     <option value="tipo-pago">Tipo de Pago</option>
     <option value="categoria">Categoría</option>
 <!--<option value="texto-libre">Texto Libre</option>
     <option value="color">Color</option>
-    <option value="fecha-asc">Fecha (ascendente)</option>
-      <option value="fecha-desc">Fecha (descendente)</option>
+    <option value="fecha-asc">fecha (ascendente)</option>
+      <option value="fecha-desc">fecha (descendente)</option>
       <option value="monto-mayor">Monto (mayor a menor)</option>
       <option value="monto-menor">Monto (menor a mayor)</option>
-    <option value="conintereses">Importe con intereses</option>
+    <option value="conintereses">importe con intereses</option>
     <option value="cantidad-cuotas">Cantidad de cuotas</option>
     <option value="valor-cuota">Valor de cada cuota</option>-->
   </select>
@@ -184,14 +184,14 @@
     <thead>
 
   <tr>
-    <th>Fecha</th>
+    <th>fecha</th>
     <th>Consumo</th>
-    <th>Importe</th>
+    <th>importe</th>
     <th>Tipo de Pago</th>
     <th>Categoría</th>
     <th>Texto Libre</th>
     <th>Color</th>
-    <th>Importe con intereses</th>
+    <th>importe con intereses</th>
     <th>Cantidad de cuotas</th>
     <th>Valor de cada cuota</th>
     

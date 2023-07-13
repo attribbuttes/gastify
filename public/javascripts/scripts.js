@@ -42,7 +42,7 @@ var fechaActual = new Date();
   document.getElementById('date-ingresos').value = today;
 
 
-  /*function ordenarPorFechaDescendente(consumos) {
+  /*function ordenarPorfechaDescendente(consumos) {
     consumos.sort(function(a, b) {
       var fechaA = new Date(a.fecha);
       var fechaB = new Date(b.fecha);

@@ -142,7 +142,7 @@ const controller = {
         }
       });
 
-      const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+      const sumaimportes = ingresosFiltrados.reduce((total, ingreso) => {
         return total + ingreso.importe;
       }, 0);
       // Obtener el mes pasado
@@ -159,11 +159,11 @@ const controller = {
           }
         }
       });
-      const sumaImportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+      const sumaimportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
         return total + ingreso.importe;
       }, 0);
 
-      res.render('ingresos', { ingresos, sumaImportes, ingresosMesPasado: ingresosMesPasado, sumaImportesMesPasado }); // Pasar los montos a la vista
+      res.render('ingresos', { ingresos, sumaimportes, ingresosMesPasado: ingresosMesPasado, sumaimportesMesPasado }); // Pasar los montos a la vista
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al obtener los consumos');
@@ -205,7 +205,7 @@ const controller = {
         }
       });
 
-      const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+      const sumaimportes = ingresosFiltrados.reduce((total, ingreso) => {
         return total + ingreso.importe;
       }, 0);
 
@@ -222,16 +222,16 @@ const controller = {
         }
       });
 
-      const sumaImportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+      const sumaimportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
         return total + ingreso.importe;
       }, 0);
 
       res.render('ingresos', {
         title: 'Express',
         ingresos,
-        sumaImportes,
+        sumaimportes,
         ingresosMesPasado,
-        sumaImportesMesPasado
+        sumaimportesMesPasado
       });
     } catch (error) {
       console.error(error);
@@ -263,9 +263,9 @@ const controller = {
 
       // Guardar los datos en la base de datos utilizando el modelo Consumo
       await Pago.create({
-        Fecha: date,
-        Empresa: name,
-        Importe: ammount,
+        fecha: date,
+        empresa: name,
+        importe: ammount,
         texto: text,
         id_fk: id_fk,
 
@@ -405,7 +405,7 @@ const controller = {
         }
       });
 
-      const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+      const sumaimportes = ingresosFiltrados.reduce((total, ingreso) => {
         return total + ingreso.importe;
       }, 0);
 
@@ -422,16 +422,16 @@ const controller = {
         }
       });
 
-      const sumaImportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+      const sumaimportesMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
         return total + ingreso.importe;
       }, 0);
 
       res.render('clientes', {
         title: 'Express',
         clientes,
-        sumaImportes,
+        sumaimportes,
         ingresosMesPasado,
-        sumaImportesMesPasado
+        sumaimportesMesPasado
       });
     } catch (error) {
       console.error(error);
@@ -646,7 +646,150 @@ const controller = {
     }
   },
 
+  ayuda: async (req, res) => {
+    try {
+      const servicios = await Servicio.findAll();
+      const consumos = await Consumo.findAll();
+      const ingresos = await Ingreso.findAll();
+      const pagos = await Pago.findAll();
 
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son indexados desde 0, por lo que sumamos 1 para obtener el mes actual.
+      const currentYear = currentDate.getFullYear();
+
+
+      const serviciosFiltrados = await Servicio.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+      const sumaServicios = serviciosFiltrados.reduce((total, servicio) => {
+        return total + servicio.importe;
+      }, 0);
+      const consumosFiltrados = await Consumo.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+      const sumaConsumos = consumosFiltrados.reduce((total, consumo) => {
+        return total + consumo.importe;
+      }, 0);
+
+      const ingresosFiltrados = await Ingreso.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+      const sumaIngresos = ingresosFiltrados.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+
+      const pagosFiltrados = await Pago.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+      const sumaPagos = pagosFiltrados.reduce((total, pago) => {
+        return total + pago.importe;
+      }, 0);
+      // Obtener el mes pasado
+      const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+      const lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+
+      const serviciosMesPasado = await Servicio.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+      const consumosMesPasado = await Consumo.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+
+      const ingresosMesPasado = await Ingreso.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+
+      const pagosMesPasado = await Pago.findAll({
+        where: {
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), lastMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), lastYear)
+            ]
+          }
+        }
+      });
+
+
+      const sumaServiciosMesPasado = serviciosMesPasado.reduce((total, servicio) => {
+        return total + servicio.importe;
+      }, 0);
+
+      const sumaConsumosMesPasado = consumosMesPasado.reduce((total, consumo) => {
+        return total + consumo.importe;
+      }, 0);
+
+      const sumaIngresosMesPasado = ingresosMesPasado.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+
+      const sumaPagosMesPasado = pagosMesPasado.reduce((total, pago) => {
+        return total + pago.importe;
+      }, 0);
+
+
+      res.render('registroDeServicios', { servicios, sumaServiciosMesPasado, sumaServicios, consumos, sumaConsumos, sumaConsumosMesPasado, ingresos, sumaIngresos, sumaIngresosMesPasado, pagos, sumaPagos,sumaPagosMesPasado }/*{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }*/); // Pasar los montos a la vista
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener los consumos');
+    }
+  },
+
+
+/*
   ayuda: async (req, res) => {
     try {
       const servicios = await Servicio.findAll();
@@ -685,12 +828,12 @@ const controller = {
         return total + servicio.importe;
       }, 0);
 
-      res.render('registroDeServicios', { servicios, sumaServiciosMesPasado, sumaServicios }/*{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }*/); // Pasar los montos a la vista
+      res.render('registroDeServicios', { servicios, sumaServiciosMesPasado, sumaServicios }//{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }); // Pasar los montos a la vista
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al obtener los consumos');
     }
-  },
+  },*/
     
   
   clientes: async (req, res) => {

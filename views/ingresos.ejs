@@ -8,13 +8,13 @@
     <h1>Lista de Ingresos</h1>
    
     <a id='mesCorriente' href="/cargarIngreso">Cargar Ingreso<i class="fa-solid fa-plus"></i></i></a> </i>
-    <p><span id="mesCorriente">el total de ingresos mensuales hasta hoy es <%=sumaImportes%></span></p>
-    <p><span id="mesCorriente">el total de ingresos del mes pasado fue  <%=sumaImportesMesPasado%></span></p>
+    <p><span id="mesCorriente">el total de ingresos mensuales hasta hoy es <%=sumaimportes%></span></p>
+    <p><span id="mesCorriente">el total de ingresos del mes pasado fue  <%=sumaimportesMesPasado%></span></p>
   <!--<div class="table-wrapper">
     <select id="ordenarPorIngreso">
-    <option value="fecha">Fecha</option>
+    <option value="fecha">fecha</option>
     <option value="cliente">Cliente</option>
-    <option value="importe">Importe</option>
+    <option value="importe">importe</option>
     <option value="tipo-pago">Tipo de Pago</option>
     <option value="categoria">Categoría</option>
   </select>-->
@@ -22,7 +22,7 @@
     <tr>
       <span id="total"></span>
 
-      <th>Fecha</th>
+      <th>fecha</th>
       <th>Cliente</th>
       <th>Cobrado</th>
       <th>Horas</th>
@@ -61,7 +61,7 @@
     
     <script>
       //aca se acomdan los numeros por descendente
-      function ordenarPorFechaDescendente() {
+      function ordenarPorfechaDescendente() {
   var table = document.getElementById("tablaIngresos");
   var rows = Array.from(table.rows).slice(1); // Obtén todas las filas de la tabla, excepto la primera (encabezados)
 
@@ -83,7 +83,7 @@
   });
 }
 
-ordenarPorFechaDescendente(); // Llama a la función para ordenar inicialmente la tabla al cargar la página
+ordenarPorfechaDescendente(); // Llama a la función para ordenar inicialmente la tabla al cargar la página
 
       const categorias = [];
       const totales = [];

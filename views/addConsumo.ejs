@@ -9,13 +9,13 @@
   <h1>Formulario de Carga de Gastos</h1>
 
   <form id="formulario" action="/guardar" method="POST">
-    <label for="date">Fecha:</label>
+    <label for="date">fecha:</label>
     <input type="date" id="date" name="date" required><br><br>
 
     <label for="name">Consumo:</label>
     <input type="text" id="name" name="name" required><br><br>
 
-    <label for="ammount">Importe:</label>
+    <label for="ammount">importe:</label>
     <input type="number" id="ammount" name="ammount" required><br><br>
 
     <label for="py_mtd">Tipo de Pago:</label>
@@ -27,7 +27,7 @@
     </select><br><br>
 
     <div id="paymentDetails" style="display: none;">
-      <label for="paymentAmount">Importe total con intereses:</label>
+      <label for="paymentAmount">importe total con intereses:</label>
       <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0.01"><br><br>
 
       <label for="installments">Cantidad de Pagos:</label>

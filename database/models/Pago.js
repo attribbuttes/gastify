@@ -7,16 +7,16 @@ const Pago = sequelize.define('Pago', {
     primaryKey: true,
     autoIncrement: true
   },
-    Fecha: {
+    fecha: {
     type: DataTypes.DATEONLY,
     allowNull: true
   },
-  Empresa: {
+  empresa: {
     type: DataTypes.STRING,
     allowNull: true
   },
   
-  Importe: {
+  importe: {
     type: DataTypes.INTEGER,
     allowNull: true
   },
