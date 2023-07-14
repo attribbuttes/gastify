@@ -6,11 +6,13 @@ const { Pago } = require('../database/models');
 const { Cliente } = require('../database/models');
 const { Servicio } = require('../database/models');
 
+const moment = require('moment');
 
 
 const Chart = require('chart.js');
 const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 
 const controller = {
   // controlador del home
@@ -838,13 +840,16 @@ const controller = {
   
   clientes: async (req, res) => {
     try {
+      // Obtener la suma de los importes para cada cliente
       const clientes = await Cliente.findAll();
-      res.render('clientes', { clientes }/*{ pagos,sumaPagos, pagosMesPasado:pagosMesPasado,sumaPagosMesPasado }*/); // Pasar los montos a la vista
+  
+      res.render('clientes', { clientes });
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al obtener los consumos');
     }
   },
+  
 
   heladera: (req, res) => {
     res.render('heladera')

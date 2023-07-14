@@ -1,0 +1,45 @@
+<%- include('./partials/head')%>
+
+<body>
+
+<%- include('./partials/navbar') %>
+
+<div class="list-containerI">
+      <h1>Totales por cliente</h1>
+
+    <a id='mesCorriente' href="/cargarCliente">Nuevo Cliente<i class="fa-solid fa-plus"></i></i></a> </i>
+      
+      <div class="table-wrapper">
+        <table class="list-tableI">
+        <tr>
+      <!--<th>ID</th>-->
+      <th>fecha</th>
+      <th>Nombre</th>
+      <th>importe</th>
+      <th>Como paga</th>
+      <th>id_fk</th>
+      <th>Texto Libre</th>
+      <th>Color</th>
+    </tr>
+    <% clientes.forEach(function(cliente) { %>
+      <tr>
+        <!--<td><%= cliente.id %></td>-->
+        <td><%= cliente.fecha ? new Date(cliente.fecha).toISOString().slice(0, 10) : '-' %></td>
+
+        <td><%= cliente.nombre %></td>
+        <td><%= cliente.importe %></td>
+        <td><%= cliente.como_paga %></td>
+        <td><%= cliente.id_fk %></td>
+        <td><%= cliente.texto_libre || '-' %></td>
+        <td><div style="width: 20px; height: 20px; background-color: <%= cliente.color %>"></div></td>
+    </tr>
+    <% }); %>
+    <table>
+        
+  </table>
+</div>
+</div>
+</div>
+
+</body>
+</html>
