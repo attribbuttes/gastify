@@ -37,6 +37,8 @@ router.get('/clientes', controller.clientes)
 router.get('/heladera', controller.heladera)
 router.get('/pronosticos', controller.pronosticos)
 
+router.get('/tv', controller.tv)
+
 
 
 

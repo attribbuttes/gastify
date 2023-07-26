@@ -1,119 +1,121 @@
-<%- include('./partials/head')%>
+<%- include('./partials/head') %>
 
 <body>
 
-<%- include('./partials/navbar') %>    
+    <%- include('./partials/navbar') %>
 
-<div class="list-containerI">
-<h1>Subtotales Agrupados por Categorías</h1>
+    <div class="list-containerI">
+        <h1>Subtotales Agrupados por Categorías</h1>
 
-<a id='mesCorriente' href="/cargarIngreso">Cargar Ingreso<i class="fa-solid fa-plus"></i></i></a> </i>
-    <p><span id="mesCorriente">el total de ingresos mensuales hasta hoy es <%=sumaSubtotales%></span></p>
-    <p><span id="mesCorriente">el total de ingresos del mes pasado fue  <%=sumaSubtotalesMesPasado%></span></p>
-<div class="table-wrapper">
+        <a id='mesCorriente' href="/cargarIngreso">Cargar Ingreso<i class="fa-solid fa-plus"></i></i></a> </i>
+        <p><span id="mesCorriente">el total de ingresos mensuales hasta hoy es <%= sumaSubtotales %></span></p>
+        <p><span id="mesCorriente">el total de ingresos del mes pasado fue <%= sumaSubtotalesMesPasado %></span></p>
 
-  <table class="list-tableI">
-    <h2>mes actual</h2>
-  <thead>
-    <tr>
-      <th>Categoría</th>
-      <th>Total Gastos</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
-      <tr>
-        <td><%= categoria %></td>
-        <td><%= total.toFixed(2) %></td>
-      </tr>
-    <% }); %>
-  </tbody>
-</table>
+        <div class="table-wrapper">
+            <!-- Tabla para el mes actual -->
+            <table class="list-tableI">
+                <h2>mes actual</h2>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Total Gastos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
+                        <tr>
+                            <td><%= categoria %></td>
+                            <td><%= total.toFixed(2) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
 
-<table class="list-tableI">
-<h2>mes pasado</h2>
-    <thead>
-      <tr>
-        <th>Categoría</th>
-        <th>Total Gastos</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
-        <tr>
-          <td><%= categoria %></td>
-          <td><%= total.toFixed(2) %></td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
+            <!-- Tabla para el mes pasado -->
+            <table class="list-tableI">
+                <h2>mes pasado</h2>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Total Gastos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
+                        <tr>
+                            <td><%= categoria %></td>
+                            <td><%= total.toFixed(2) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
 
-<p><div>
-<canvas id="myChart"></canvas>
-</div></p>
+            <!-- Tabla para desde siempre -->
+            <table class="list-tableI">
+                <h2>desde siempre</h2>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Total Gastos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Object.entries(totalesPorCategoria).forEach(([categoria, total]) => { %>
+                        <tr>
+                            <td><%= categoria %></td>
+                            <td><%= total.toFixed(2) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
 
-<p><div>
-  <canvas id="myChart"></canvas>
-  </div>
-</p>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
+            <!-- Contenedor para el gráfico -->
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Script para referenciar el archivo scripts.js -->
+    <script src="../javascripts/scripts.js"></script>
 <script>
-  const categorias = [];
-  const totales = [];
+  // Código JavaScript para generar el gráfico
+const categorias = [];
+const totales = [];
 
-  // Recorre las filas de la tabla y extrae los valores de categoría y total
-  const filas = document.querySelectorAll('tbody tr');
-  filas.forEach((fila) => {
+// Recorre las filas de la tabla y extrae los valores de categoría y total
+const filas = document.querySelectorAll('tbody tr');
+filas.forEach((fila) => {
     const categoria = fila.querySelector('td:first-child').innerText;
     const total = parseFloat(fila.querySelector('td:last-child').innerText);
     categorias.push(categoria);
     totales.push(total);
-  });
+});
 
-  // Resto del código del gráfico
-  const ctx = document.getElementById('myChart');
+// Resto del código del gráfico
+const ctx = document.getElementById('myChart');
 
-  new Chart(ctx, {
+new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: categorias,
-      datasets: [{
-        label: 'En cantidad de dinero',
-        data: totales,
-        borderWidth: 1
-      }]
+        labels: categorias,
+        datasets: [{
+            label: 'En cantidad de dinero',
+            data: totales,
+            borderWidth: 1
+        }]
     },
     options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
         }
-      }
     }
-  });
-  var canvas = document.getElementById("myChart");
-
-// Modifica el estilo del canvas
-//canvas.style.backgroundColor = "red";
-canvas.style.border = "1px solid black";
-canvas.style.width = "500px";
-canvas.style.height = "300px";
-
+});
 
 </script>
-
-</script>
-
-
-
-</div>
-</div>
-</div>
-<script src="../javascripts/scripts.js"></script>
-
 
 </body>
+</html>
