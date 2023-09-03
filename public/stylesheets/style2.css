@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+  }
+  
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+/* Estilos de la barra de navegación */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+  
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    
+  }
+  li {
+    float: left;
+  }
+  .navbar-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .navbar-list li {
+    margin-right: 10px;
+  }
+  
+  .navbar-list li:last-child {
+    margin-right: 0;
+  }
+  
+  .navbar-list li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navbar-list li a:hover {
+    text-decoration: underline;
+  }

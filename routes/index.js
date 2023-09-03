@@ -33,11 +33,14 @@ router.get('/categorias', controller.categorias );
 router.get('/subtotales', controller.subtotales );
 router.get('/recurrentes', controller.recurrentes)
 
+
 router.get('/clientes', controller.clientes)
 router.get('/heladera', controller.heladera)
 router.get('/pronosticos', controller.pronosticos)
 
 router.get('/tv', controller.tv)
+
+router.get('/bancarizado', controller.bancarizado)
 
 
 

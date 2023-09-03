@@ -23,6 +23,10 @@ const Ingreso = sequelize.define('Ingreso', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  tipo_pago: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   color: {
     type: DataTypes.STRING(6) // Especifica una longitud máxima de 6 caracteres para el código de color hexadecimal
   },
