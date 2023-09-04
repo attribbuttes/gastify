@@ -954,7 +954,7 @@ const controller = {
       const ingresosBancarizados = await Ingreso.findAll({
         where: {
           tipo_pago: {
-            [Op.in]: ['debito', 'transfer'],
+            [Op.in]: ['debito', 'transfer', 'mercado'],
           },
           fecha: {
             [Op.and]: [
