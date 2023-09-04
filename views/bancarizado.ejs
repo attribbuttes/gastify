@@ -4,18 +4,58 @@
 
 <%- include('./partials/navbar') %>
 <br>
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-
-
 
 <p><span id="mesCorrienteBancarizado">El total de ingresos bancarizados del mes corriente es <%= bancarizadoMesCorriente %></span></p>
 <p><span id="mesCorrienteConsumosBancarizados">El total de consumos bancarizados del mes corriente es <%= sumaImportesConsumosBancarizados %></span></p>
+
+
+    <h1>Ingresos Bancarizados</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Importe</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% ingresosBancarizados.forEach(ingreso => { %>
+                <tr>
+                    <td><%= ingreso.fecha %></td>
+                    <td><%= ingreso.cliente %></td>
+                    <td><%= ingreso.importe %></td>
+                    <td><%= ingreso.categoria %></td>
+
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <h1>Consumos Bancarizados</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Consumo</th>
+                <th>Importe</th>
+                <th>Tipo de pago</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% consumosBancarizados.forEach(consumo => { %>
+                <tr>
+                    <td><%= consumo.fecha %></td>
+                    <td><%= consumo.consumo %></td>
+                    <td><%= consumo.importe %></td>
+                    <td><%= consumo.tipo_pago %></td>
+
+
+
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

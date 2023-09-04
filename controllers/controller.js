@@ -991,7 +991,7 @@ const controller = {
     }, 0);
 
 
-      res.render('bancarizado', {
+      res.render('bancarizado', { ingresosBancarizados, consumosBancarizados,
         // Otras variables que desees pasar a la vista...
         bancarizadoMesCorriente: sumaImportesBancarizados,
         sumaImportesConsumosBancarizados: sumaImportesConsumosBancarizados,
