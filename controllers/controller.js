@@ -5,6 +5,7 @@ const { Ingreso } = require('../database/models');
 const { Pago } = require('../database/models');
 const { Cliente } = require('../database/models');
 const { Servicio } = require('../database/models');
+const { Billetera } = require('../database/models'); // Importa el modelo Sequelize
 
 const moment = require('moment');
 
@@ -1001,6 +1002,34 @@ const controller = {
       res.status(500).send('Error interno del servidor');
     }
   },
+
+  // BilleteraController.js
+
+
+// Método para obtener todos los Billeteras
+mostrar : async (req, res) => {
+    try {
+        const Billeteras = await Billetera.findAll();
+        res.render('tv', { Billeteras });
+    } catch (error) {
+        console.error('Error al obtener Billeteras:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+},
+
+// Método para agregar un nuevo Billetera
+agregar: async (req, res) => {
+    try {
+        const nuevoBilletera = req.body.texto;
+        if (nuevoBilletera) {
+            await Billetera.create({ texto: nuevoBilletera });
+        }
+        res.redirect('/tv');
+    } catch (error) {
+        console.error('Error al agregar Billetera:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+},
 
 
   

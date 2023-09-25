@@ -39,6 +39,10 @@ router.get('/heladera', controller.heladera)
 router.get('/pronosticos', controller.pronosticos)
 
 router.get('/tv', controller.tv)
+//router.get('/tv', controller.mostrar);
+//router.get('/tv', controller.agregar);
+
+
 
 router.get('/bancarizado', controller.bancarizado)
 
