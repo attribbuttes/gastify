@@ -102,49 +102,57 @@ const controller = {
   //post de guardar gasto redirije a index
   guardar: async (req, res) => {
     try {
-      const { date, name, ammount, py_mtd, paymentAmount, installments, installmentAmount, color, category, texto_libre } = req.body;
+        const { date, name, ammount, py_mtd, paymentAmount, installments, installmentAmount, color, category, texto_libre, firstPayment } = req.body;
 
-      let monto_total = 0;
-      let cantidad_pagos = 0;
-      let valor_cuota = 0;
+        let monto_total = 0;
+        let cantidad_pagos = 0;
+        let valor_cuota = 0;
+        let fecha_pago = new Date(date);
 
-      if (py_mtd === 'tarjeta') {
-        monto_total = paymentAmount;
-        cantidad_pagos = installments;
-        valor_cuota = installmentAmount;
-      } else {
-        monto_total = ammount;
-        cantidad_pagos = 1;
-        valor_cuota = ammount;
-      }
+        if (py_mtd === 'tarjeta') {
+            monto_total = paymentAmount;
+            cantidad_pagos = installments;
+            valor_cuota = installmentAmount;
+        } else {
+            monto_total = ammount;
+            cantidad_pagos = 1;
+            valor_cuota = ammount;
+        }
 
+        // Verificar si se debe cargar el primer pago en el mes actual o siguiente
+        if (!firstPayment) {
+            fecha_pago.setMonth(fecha_pago.getMonth() + 1);
+        }
 
-      // Guardar los datos en la base de datos utilizando el modelo Consumo
-      await Consumo.create({
-        fecha: date,
-        consumo: name,
-        importe: ammount,
-        tipo_pago: py_mtd,
-        monto_total: monto_total,
-        cantidad_pagos: cantidad_pagos,
-        valor_cuota: valor_cuota,
-        categoria: category,
-        color: color,
-        texto_libre: texto_libre,
+        for (let i = 0; i < cantidad_pagos; i++) {
+            // Crear un registro de consumo para cada cuota
+            await Consumo.create({
+                fecha: fecha_pago,
+                consumo: name,
+                importe: valor_cuota,
+                tipo_pago: py_mtd,
+                monto_total: monto_total,
+                cantidad_pagos: cantidad_pagos,
+                valor_cuota: valor_cuota,
+                categoria: category,
+                color: color,
+                texto_libre: texto_libre,
+            });
 
+            // Avanzar la fecha al próximo mes para la siguiente cuota
+            fecha_pago.setMonth(fecha_pago.getMonth() + 1);
+        }
 
-      });
+        const consumos = await Consumo.findAll();
+        const montos = consumos.map(consumo => consumo.monto_total);
 
-
-      const consumos = await Consumo.findAll();
-      const montos = consumos.map(consumo => consumo.monto_total); // Obtener los montos de los consumos
-
-      res.render('index', { title: 'Express', consumos, montos }); // Pasar los montos a la vista
+        res.render('index', { title: 'Express', consumos, montos });
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Error al guardar los datos');
+        console.error(error);
+        res.status(500).send('Error al guardar los datos');
     }
-  },
+},
+
   // hasta aca la home
 
   //get, post y formulario de ingresos
