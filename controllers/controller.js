@@ -121,7 +121,9 @@ const controller = {
 
         // Verificar si se debe cargar el primer pago en el mes actual o siguiente
         if (!firstPayment) {
-            fecha_pago.setMonth(fecha_pago.getMonth() + 1);
+            
+        }else{
+          fecha_pago.setMonth(fecha_pago.getMonth() + 1);
         }
 
         for (let i = 0; i < cantidad_pagos; i++) {

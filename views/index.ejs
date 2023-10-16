@@ -206,7 +206,7 @@
 
   <% consumos.forEach(function(consumo) { %>
     <tr>
-      <td class="fecha"><%= consumo.fecha ? new Date(consumo.fecha).toISOString().slice(0, 10) : '-' %></td>
+      <td class="fecha"><%= consumo.fecha ?  consumo.fecha.slice(0, 10) : '-' %></td>
       <td class="consumo"><%= consumo.consumo %></td>
       <td class="importe"><%= consumo.importe  %></td>
       <td class="tipo-pago"><%= consumo.tipo_pago %></td>
