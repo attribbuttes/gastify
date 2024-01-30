@@ -23,7 +23,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 1000;
     
   }
   li {
@@ -53,3 +53,9 @@ body {
   .navbar-list li a:hover {
     text-decoration: underline;
   }
+
+  /*para que el container este dentro de otro*/
+  .content-container {
+    margin-top: 70px; /* Ajusta el valor según la altura de tu barra de navegación */
+    padding: 20px; /* Ajusta el valor según sea necesario */
+}

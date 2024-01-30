@@ -3,11 +3,15 @@
 <body>
 
 <%- include('./partials/navbar') %>
-<br>
 
-<p><span id="mesCorrienteBancarizado">El total de ingresos bancarizados del mes corriente es <%= bancarizadoMesCorriente %></span></p>
+
+<div class="content-container">
+<p><span id="mesCorrienteBancarizado">El total de ingresos bancarizados del mes corriente es <%= bancarizadoMesCorriente %>, NO PASES EL MAXIMO 175690</span></p>
 <p><span id="mesCorrienteConsumosBancarizados">El total de consumos bancarizados del mes corriente es <%= sumaImportesConsumosBancarizados %></span></p>
 
+<p><span id="limiteDeFacturacion">La facturacion anual no puede superar $2.108.288.01(175.690,666 x12 ) anual fecha enero 2024</span></p>
+
+<p>en tus cuentas (ml y banco) deberias tener: xxxxx</p>
 
     <h1>Ingresos Bancarizados</h1>
     <table>
@@ -59,3 +63,5 @@
     </table>
 </body>
 </html>
+
+</div>

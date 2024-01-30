@@ -4,6 +4,7 @@
 
 <%- include('./partials/navbar') %>      
 
+<div class="content-container">
 
 <h1>Input y Mostrar</h1>
 <input type="text" id="textoInput" placeholder="Escribe un texto o número">
@@ -11,7 +12,7 @@
 
 <h2>Elementos Agregados:</h2>
 <ul id="elementosList"></ul>
-
+</div>
 <script>
     const textoInput = document.getElementById('textoInput');
     const agregarButton = document.getElementById('agregarButton');
@@ -28,4 +29,5 @@
     });
 </script>
 </body>
+
 </html>
