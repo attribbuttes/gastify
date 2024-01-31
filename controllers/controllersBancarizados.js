@@ -38,6 +38,20 @@ bancarizadoData: async (req, res) => {
           },
         },
       });
+     
+      const ingresosBancarizadosMensuales = await Ingreso.findAll({
+        where: {
+          tipo_pago: {
+            [Op.in]: ['debito', 'transfer', 'mercado'],
+          },
+          fecha: {
+            [Op.lt]: moment(), // Filtra los ingresos anteriores a la fecha actual
+          },
+        },
+        order: [['fecha', 'DESC']], // Ordena por fecha descendente
+      });
+
+
 
       // Calcula la suma de los importes de los ingresos bancarizados
       const sumaImportesBancarizados = ingresosBancarizados.reduce((total, ingreso) => {
@@ -66,6 +80,7 @@ bancarizadoData: async (req, res) => {
 
 
       res.render('bancarizado', { ingresosBancarizados, consumosBancarizados,
+        ingresosBancarizadosMensuales,
         // Otras variables que desees pasar a la vista...
         bancarizadoMesCorriente: sumaImportesBancarizados,
         sumaImportesConsumosBancarizados: sumaImportesConsumosBancarizados,

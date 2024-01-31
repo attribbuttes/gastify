@@ -1033,8 +1033,29 @@ const controller = {
       return total + consumo.importe;
     }, 0);
 
+    const ingresosBancarizadosMensuales = await Ingreso.findAll({
+      attributes: [
+        [sequelize.fn('MONTH', sequelize.col('fecha')), 'mes'],
+        [sequelize.fn('YEAR', sequelize.col('fecha')), 'anio'],
+        [sequelize.fn('SUM', sequelize.col('importe')), 'total'],
+      ],
+      where: {
+        tipo_pago: {
+          [Op.in]: ['debito', 'transfer', 'mercado'],
+        },
+        fecha: {
+          [Op.lt]: moment(),
+        },
+      },
+      group: ['mes', 'anio'],
+      order: [[sequelize.literal('anio DESC, mes DESC')]],
+    });
 
-      res.render('bancarizado', { ingresosBancarizados, consumosBancarizados,
+    console.log('Ingresos Bancarizados Mensuales:', ingresosBancarizadosMensuales);
+
+
+
+      res.render('bancarizado', { ingresosBancarizados, consumosBancarizados,ingresosBancarizadosMensuales,
         // Otras variables que desees pasar a la vista...
         bancarizadoMesCorriente: sumaImportesBancarizados,
         sumaImportesConsumosBancarizados: sumaImportesConsumosBancarizados,

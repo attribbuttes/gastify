@@ -36,6 +36,30 @@
         </tbody>
     </table>
 
+    <% console.log('Datos en la vista:', ingresosBancarizadosMensuales); %>
+
+
+    <h1>Ingresos Bancarizados Mensuales</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th>Año</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% ingresosBancarizadosMensuales.forEach(ingreso => { %>
+            <tr>
+                <td><%= ingreso.dataValues.mes %></td>
+                <td><%= ingreso.dataValues.anio %></td>
+                <td><%= ingreso.dataValues.total %></td>
+              </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    
+
     <h1>Consumos Bancarizados</h1>
     <table>
         <thead>
