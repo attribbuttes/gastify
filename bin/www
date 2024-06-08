@@ -89,5 +89,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  opn('http://localhost:' + port)
+  opn('http://localhost:' + port +'/bancarizado')
 }

@@ -24,37 +24,35 @@
   <table id="tablaIngresos" class="list-tableI">
     <tr>
       <span id="total"></span>
-
       <th>fecha</th>
       <th>Cliente</th>
       <th>Cobrado</th>
       <th>Horas</th>
       <th>Promedio Ingreso por Hora</th>
-
-
       <th>Texto Libre-aclaraciones</th>
       <th>Color</th>
       <th>Categoría</th>
-
     </tr>
     <% ingresos.forEach(function(ingreso) { %>
       <tr>
-      
-        <td><%= ingreso.fecha ? new Date(ingreso.fecha).toISOString().slice(0, 10) : '-' %></td>
-
+        <td>
+          <% if (ingreso.fecha && new Date(ingreso.fecha) && !isNaN(new Date(ingreso.fecha).getTime())) { %>
+            <%= new Date(ingreso.fecha).toISOString().slice(0, 10) %>
+          <% } else { %>
+            Fecha no válida
+          <% } %>
+        </td>
         <td><%= ingreso.cliente %></td>
         <td><%= ingreso.importe %></td>
         <td><%= ingreso.horas %></td>
         <td><%= (ingreso.importe / ingreso.horas).toFixed(2) %></td>
-
-        
         <td><%= ingreso.texto || '-' %></td>
         <td><div style="width: 20px; height: 20px; background-color: <%= ingreso.color %>"></div></td>
-        <!--<td><%= ingreso.tipo_pago %></td>-->
         <td><%= ingreso.categoria %></td>
-    </tr>
+      </tr>
     <% }); %>
   </table>
+  
   
 </div>
   

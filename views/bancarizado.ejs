@@ -1,98 +1,140 @@
 <%- include('./partials/head')%>
 
-<body>
+    <body>
 
-<%- include('./partials/navbar') %>
-
-
-<div class="content-container">
-<p><span id="mesCorrienteBancarizado">ingresos bancarizados del mes $<%= bancarizadoMesCorriente %>, MAXIMO $175690</span></p>
-<p><span id="mesCorrienteConsumosBancarizados">consumos bancarizados es $<%= sumaImportesConsumosBancarizados %></span></p>
-
-<p><span id="limiteDeFacturacion">La facturacion anual no puede superar $2.108.288.01(175.690,666 x12 ) anual fecha enero 2024</span></p>
-
-<p>en tus banco deberias tener : xxxxx</p>
-
-<p>en tus mercadopago deberias tener : xxxxx</p>
-
-<p>la dorada(secundaria) ciclo 9, cierra el 20-FEBRERO y vence el 27-FEBRERO</p>
-<p>la visa cierra el 22-2-2024 y vence el 04-03-2024</p>
-<p>la verde(principal) CICLO 5, cierra el 13-DE-FEBRERO y vence el 19 DE FEBRERO</p>
+        <%- include('./partials/navbar') %>
 
 
-    <h1>Ingresos Bancarizados</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Importe</th>
-                <th>Categoria</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% ingresosBancarizados.forEach(ingreso => { %>
-                <tr>
-                    <td><%= ingreso.fecha %></td>
-                    <td><%= ingreso.cliente %></td>
-                    <td><%= ingreso.importe %></td>
-                    <td><%= ingreso.categoria %></td>
+            <div class="content-container">
+                <p><a id='mesCorriente' href="/cargarIngreso">Cargar Ingreso<i class="fa-solid fa-plus"></i></i></a> </i></p>
+                <p><span id="mesCorrienteBancarizado">ingresos bancarizados del mes $<%= bancarizadoMesCorriente %>
+                            </span></p>
 
-                </tr>
-            <% }); %>
-        </tbody>
-    </table>
+                <p><span id="mesCorrienteBancarizado">ingresos facturados del mes $<%= bancarizadoMesCorriente %>,
+                            MAXIMO $175690</span></p>
+                <p><span id="mesCorrienteConsumosBancarizados">consumos bancarizados es $<%=
+                            sumaImportesConsumosBancarizados %></span></p>
 
-    <% console.log('Datos en la vista:', ingresosBancarizadosMensuales); %>
+                <p><span id="limiteDeFacturacion">La facturacion anual no puede superar $2.108.288.01(175.690,666 x12 )
+                        anual fecha enero 2024</span></p>
+
+                <!--<p>en tus banco deberias tener : xxxxx</p>-->
+
+                <!--<p>en tus mercadopago deberias tener : xxxxx</p>-->
+                <p>la visa cierra el 19-06-24 y vence el MIERCOLES 01-07-2024 cargos al 8-6 $25632 </p> <p>PAGADA 3-6 TOTAL mes 5</p>
+
+                <p>personal celular te dieron una promo de 6 meses desde 11/4/24 35% aprox $12000</p>
+                <p>MAYO - JUNIO- JULIO - AGOSTO - SEPTIEMBRE - OCTUBRE</p>
+
+                <p>la dorada(secundaria) ciclo 9 martes, 18 de junio de 2024 venc jueves, 27 de junio de 2024 $59000 mes pasado + chg actuales/// PAGUE $100.000 EL 30-4-2024, debo $59000 //FECHA DE VENCIMIENTO 28-5 $138811</p>
+                <p>pago amex 80.000 22-5-2024//debo $58811//</p>
+
+               
+                <p>la renovacion de la AMEX (VERDE PRINCIPAL) viene en enero 2025 asi q en diciembre deberias de darle de baja</p>
+
+                <p>tenes en el banco $36200</p>
+                <p>tenes en mercadopago $68000</p>
+                <p>en EFT tenes $60000</p>
+                <P>TOTAL 164000</P>
+
+                
+
+                <h1>Ingresos Bancarizados</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Importe</th>
+                            <th>Categoria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ingresosBancarizados.forEach(ingreso=> { %>
+                            <tr>
+                                <td>
+                                    <%= ingreso.fecha %>
+                                </td>
+                                <td>
+                                    <%= ingreso.cliente %>
+                                </td>
+                                <td>
+                                    <%= ingreso.importe %>
+                                </td>
+                                <td>
+                                    <%= ingreso.categoria %>
+                                </td>
+
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+
+                <% console.log('Datos en la vista:', ingresosBancarizadosMensuales); %>
 
 
-    <h1>Ingresos Bancarizados Mensuales</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Mes</th>
-          <th>Año</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% ingresosBancarizadosMensuales.forEach(ingreso => { %>
-            <tr>
-                <td><%= ingreso.dataValues.mes %></td>
-                <td><%= ingreso.dataValues.anio %></td>
-                <td><%= ingreso.dataValues.total %></td>
-              </tr>
-        <% }); %>
-      </tbody>
-    </table>
-    
-
-    <h1>Consumos Bancarizados</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Consumo</th>
-                <th>Importe</th>
-                <th>Tipo de pago</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <% consumosBancarizados.forEach(consumo => { %>
-                <tr>
-                    <td><%= consumo.fecha %></td>
-                    <td><%= consumo.consumo %></td>
-                    <td><%= consumo.importe %></td>
-                    <td><%= consumo.tipo_pago %></td>
+                    <h1>Ingresos Bancarizados Mensuales</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Año</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% ingresosBancarizadosMensuales.forEach(ingreso=> { %>
+                                <tr>
+                                    <td>
+                                        <%= ingreso.dataValues.mes %>
+                                    </td>
+                                    <td>
+                                        <%= ingreso.dataValues.anio %>
+                                    </td>
+                                    <td>
+                                        <%= ingreso.dataValues.total %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
 
 
+                    <h1>Consumos Bancarizados</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Consumo</th>
+                                <th>Importe</th>
+                                <th>Tipo de pago</th>
 
-                </tr>
-            <% }); %>
-        </tbody>
-    </table>
-</body>
-</html>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% consumosBancarizados.forEach(consumo=> { %>
+                                <tr>
+                                    <td>
+                                        <%= consumo.fecha %>
+                                    </td>
+                                    <td>
+                                        <%= consumo.consumo %>
+                                    </td>
+                                    <td>
+                                        <%= consumo.importe %>
+                                    </td>
+                                    <td>
+                                        <%= consumo.tipo_pago %>
+                                    </td>
 
-</div>
+
+
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+    </body>
+
+    </html>
+
+    </div>
