@@ -1,47 +1,111 @@
-/* styles.css */
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
-    margin: 80;
-    padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #000000; /* Negro */
+  margin: 80px;
+  padding: 0;
+}
+
+.content-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #FFFFFF; /* Blanco */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Blanco con transparencia */
+}
+
+h1 {
+  color: #FF55FF; /* Magenta claro */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #55FFFF; /* Cian claro */
+}
+
+thead {
+  background-color: #00AAAA; /* Cian */
+}
+
+p {
+  margin: 10px 0;
+  color: #FF55FF; /* Magenta claro */
+}
+
+/* Nuevos estilos para los cuadros */
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  background-color: #00AAAA; /* Cian */
+  color: #FFFFFF; /* Blanco */
+  border: 2px solid #FFFFFF; /* Blanco */
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+}
+
+/* Estilos para los párrafos dentro de .flex-item */
+.flex-item p {
+  margin: 10px 0; /* Espacio entre párrafos */
+  color: #FFFFFF; /* Blanco */
+  font-size: 1em; /* Tamaño de fuente igual al resto */
+}
+
+.visa {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  background-color: #AA00AA; /* Magenta */
+  color: #FFFFFF; /* Blanco */
+  border: 2px solid #FFFFFF; /* Blanco */
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+}
+
+.dorada {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  background-color: #FF55FF; /* Magenta claro */
+  color: #000000; /* Negro */
+  border: 2px solid #000000; /* Negro */
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+}
+
+.cargarIngreso {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  background-color: #55FFFF; /* Cian claro */
+  color: #000000; /* Negro */
+  border: 2px solid #000000; /* Negro */
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+}
+
+@media (max-width: 600px) {
+  .flex-container {
+      flex-direction: column;
   }
-  
-  .content-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  thead {
-    background-color: #f2f2f2;
-  }
-  
-  p {
-    margin: 10px 0;
-    color: #333;
-  }
-  
-  #mesCorrienteBancarizado, #mesCorrienteConsumosBancarizados, #limiteDeFacturacion {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
+}
