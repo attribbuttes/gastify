@@ -25,6 +25,8 @@
     <tr>
       <span id="total"></span>
       <th>fecha</th>
+      <th>id</th>
+
       <th>Cliente</th>
       <th>Cobrado</th>
       <th>Horas</th>
@@ -42,6 +44,8 @@
             Fecha no válida
           <% } %>
         </td>
+        <td><%= ingreso.id %></td>
+
         <td><%= ingreso.cliente %></td>
         <td><%= ingreso.importe %></td>
         <td><%= ingreso.horas %></td>

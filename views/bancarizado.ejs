@@ -11,6 +11,18 @@
             </div>
             <div class="flex-item">
                 <p id="mesCorrienteBancarizado">ingresos bancarizados del mes $<%= bancarizadoMesCorriente %></p>
+                <tbody>
+                    <% ingresosBancarizados.forEach(ingreso => { %>
+                        <tr>
+                            
+                            <td><%= ingreso.cliente %></td>
+                            <td><%= ingreso.importe %></td>
+                            
+                        </tr>
+                    <% }); %>
+                </tbody>
+
+
             </div>
             <div class="flex-item">
                 <p id="mesCorrienteBancarizado">ingresos facturados del mes $<%= bancarizadoMesCorriente %>, MAXIMO $175690</p>
@@ -25,7 +37,7 @@
 
         <!-- Comentarios eliminados para mayor claridad -->
         <div class="flex-item visa">
-        <p>visa cierra el 25-07-24 y vence Mi cumple 05-08-2024</p>
+        <p>visa cierra el 25-07-24 y vence Mi cumple 05-08-2024 -3/3 $25632 - 3/6 $26361 =$52000</p>
     </div>
     <div class="flex-item">
         <p id="mesCorrienteConsumosBancarizados">consumos bancarizados es $<%= sumaImportesConsumosBancarizados %></p>
