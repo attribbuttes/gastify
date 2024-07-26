@@ -993,6 +993,22 @@ const controller = {
       const currentMonth = currentDate.getMonth() + 1;
       const currentYear = currentDate.getFullYear();
 
+      const ingresosFiltrados = await Ingreso.findAll({
+        where: {
+          // Filtramos por el mes y año actual
+          fecha: {
+            [Op.and]: [
+              Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha')), currentMonth),
+              Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha')), currentYear)
+            ]
+          }
+        }
+      });
+
+      const sumaImportes = ingresosFiltrados.reduce((total, ingreso) => {
+        return total + ingreso.importe;
+      }, 0);
+
       // Filtra los ingresos por tipo_pago 'debito' y 'transfer' para el mes actual
       const ingresosBancarizados = await Ingreso.findAll({
         where: {
@@ -1055,7 +1071,7 @@ const controller = {
 
 
 
-      res.render('bancarizado', { ingresosBancarizados, consumosBancarizados,ingresosBancarizadosMensuales,
+      res.render('bancarizado', { ingresosBancarizados, consumosBancarizados,ingresosBancarizadosMensuales, sumaImportes,
         // Otras variables que desees pasar a la vista...
         bancarizadoMesCorriente: sumaImportesBancarizados,
         sumaImportesConsumosBancarizados: sumaImportesConsumosBancarizados,
