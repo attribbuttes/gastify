@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const controller = require('../controllers/controller');
+const naftaController = require('../controllers/naftaController');
+const dashboardController = require('../controllers/dashboardController');
 
 
 
@@ -42,9 +44,12 @@ router.get('/tv', controller.tv)
 //router.get('/tv', controller.mostrar);
 //router.get('/tv', controller.agregar);
 
+router.get('/gastos-transporte', naftaController.index);
 
 
 router.get('/bancarizado', controller.bancarizado)
+router.get('/dashboard', dashboardController.dashboard)
+
 
 
 

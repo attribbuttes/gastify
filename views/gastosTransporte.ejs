@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Consumo</th>
+                <th>Importe</th>
+                <th>Tipo de Pago</th>
+                <th>Monto Total</th>
+                <th>Cantidad Pagos</th>
+                <th>Valor Cuota</th>
+                <th>Texto Libre</th>
+                <th>Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (gastos.length > 0) { %>
+                <% gastos.forEach(gasto => { %>
+                    <tr>
+                        <td><%= gasto.fecha %></td>
+                        <td><%= gasto.consumo %></td>
+                        <td><%= gasto.importe %></td>
+                        <td><%= gasto.tipo_pago %></td>
+                        <td><%= gasto.monto_total %></td>
+                        <td><%= gasto.cantidad_pagos %></td>
+                        <td><%= gasto.valor_cuota %></td>
+                        <td><%= gasto.texto_libre %></td>
+                        <td><%= gasto.color %></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="9">No hay datos para mostrar</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

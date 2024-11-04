@@ -1067,7 +1067,7 @@ const controller = {
       order: [[sequelize.literal('anio DESC, mes DESC')]],
     });
 
-    console.log('Ingresos Bancarizados Mensuales:', ingresosBancarizadosMensuales);
+    
 
 
 
@@ -1111,6 +1111,9 @@ agregar: async (req, res) => {
 },
 
 
+dashboard: (req, res) => {
+  res.render('dashboard')
+},
   
   /* (req, res) => {
       res.render('recurrentes')
